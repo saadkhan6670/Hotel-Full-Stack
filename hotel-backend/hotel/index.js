@@ -5,6 +5,6 @@ var router = express.Router();
 var hotel = require('./controller');
 
 
-router.post('/show-hotels' , hotel.SearchAll);
+router.get('/show-hotels/:hotel' , hotel.SearchAll);
 
 module.exports = router;

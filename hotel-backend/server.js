@@ -5,6 +5,7 @@ var app = express();
 var port = 3000;
 var mongoose = require('mongoose');
 var Hotels = require('./hotel/model');
+var cors = require('cors');
 
 
 //Connect to mongodb
@@ -17,6 +18,8 @@ mongoose.connect('mongodb://localhost/hotelDB', { useMongoClient: true}, (err) =
         console.log("MongoDB is now Connected")
     }
 });
+
+app.use(cors())
 
 //body parser middleware
 app.use(bodyParser.json()); // support json encoded bodies
