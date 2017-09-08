@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import { AutoComplete}   from 'material-ui';
 import getMuiTheme        from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
-import axios from 'axios'
+import axios              from 'axios';
 
+const URL = 'http://localhost:5000/hotel/show-hotels/';
 
 
 class MaterialUIAutocomplete extends Component {
@@ -27,33 +28,25 @@ class MaterialUIAutocomplete extends Component {
 
   performSearch() {
     const
-    self = this;
+      self = this,
+      url  = URL + this.state.inputValue;
 
-    let url = 'http://localhost:3000/hotel/show-hotels/' + this.state.inputValue;
-    
-    if(this.state.inputValue.length >= 2) {
+    if(this.state.inputValue !== '') {
+      axios.get(url)
+        .then( (response) => {
+        let searchResults, retrievedSearchTerms;
 
-    axios.get(url)
-    .then(function (response) {
-      let searchResults, retrievedSearchTerms;
-      console.log(response);
+        searchResults = response.data;
+     
+        retrievedSearchTerms = searchResults.map(function(result) {
+         return result.name;
+         
+        });
 
-      searchResults = response.data;
-      
-            // retrievedSearchTerms = searchResults.map(function(result) {
-            //   return result;
-            // });
-      
-            self.setState({
-              dataSource: searchResults
-            });
+        self.setState({
+          dataSource: retrievedSearchTerms
+        });
     })
-    .catch(function (error) {
-      console.log(error);
-    });
-
-    
-   
   }
 }
   
@@ -62,7 +55,8 @@ class MaterialUIAutocomplete extends Component {
     return  <MuiThemeProvider muiTheme={getMuiTheme()}>
       <AutoComplete
         dataSource    = {this.state.dataSource}
-        onUpdateInput = {this.onUpdateInput} />
+        onUpdateInput = {this.onUpdateInput}
+        filter = {AutoComplete.caseInsensitiveFilter}/>
       </MuiThemeProvider> 
   }
 }

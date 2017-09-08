@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
 import './App.css'
-import MaterialUIComponent from './MaterialUIComponent'
+import MaterialUIAutocomplete from './MaterialUIAutocomplete'
 
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-       <MaterialUIComponent/>
+       <MaterialUIAutocomplete/>
       </div>
     );
   }

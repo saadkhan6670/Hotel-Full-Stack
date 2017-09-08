@@ -7,9 +7,9 @@ exports.SearchAll = function (req, res) {
 
     let search = req.params.hotel;
 
-    Hotels.find().or([{ 'name': { $regex: search, $options: 'i' } }]).exec(function (err, data) {
-        if (err) {
-            res.send(err);
+    Hotels.find({ 'name': { $regex: search, $options: 'i' } } , (err,  data) => {
+        if (data.length == 0 ) {
+           res.send("this is an erro")
         }
         else {
             console.log("data hit")
