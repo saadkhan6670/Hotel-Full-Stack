@@ -56,7 +56,7 @@ class MaterialUIAutocomplete extends Component {
       <AutoComplete
         dataSource    = {this.state.dataSource}
         onUpdateInput = {this.onUpdateInput}
-        filter = {AutoComplete.caseInsensitiveFilter || AutoComplete.caseSensitiveFilter}/>
+        filter = {AutoComplete.caseInsensitiveFilter }/>
       </MuiThemeProvider> 
   }
 }
