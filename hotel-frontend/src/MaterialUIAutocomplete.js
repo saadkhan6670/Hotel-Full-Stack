@@ -6,7 +6,6 @@ import axios              from 'axios';
 
 const URL = 'http://localhost:5000/hotel/show-hotels/';
 
-
 class MaterialUIAutocomplete extends Component {
   constructor(props) {
     super(props);
@@ -54,6 +53,7 @@ class MaterialUIAutocomplete extends Component {
   render() {
     return  <MuiThemeProvider muiTheme={getMuiTheme()}>
       <AutoComplete
+      hintText="Search Destination"
         dataSource    = {this.state.dataSource}
         onUpdateInput = {this.onUpdateInput}
         filter = {AutoComplete.caseInsensitiveFilter }/>

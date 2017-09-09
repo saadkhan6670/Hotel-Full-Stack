@@ -106,3 +106,88 @@ export function unregister() {
     });
   }
 }
+
+
+
+// import React, {Component} from 'react';
+// import { DatePicker}   from 'material-ui';
+// import getMuiTheme        from 'material-ui/styles/getMuiTheme';
+// import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
+
+// function disablePrevDates(startDate) {
+//     const startSeconds = Date.parse(startDate);
+//     return (date) => {
+//       return Date.parse(date) < startSeconds;
+//     }
+//   }
+
+//   const optionsStyle = {
+//     maxWidth: 255,
+//     marginRight: 'auto',
+//   };
+  
+
+//   class DatePickerExample extends Component {
+//     constructor(props) {
+//         super(props);
+    
+//         const minDate = new Date();
+//         const maxDate = new Date();
+    
+//         this.state = {
+//           minDate: minDate,
+//           maxDate: maxDate
+//         };
+//       }
+    
+//       handleChangeMinDate = (event, date) => {
+//         this.setState({
+//           minDate: date,
+//         });
+//       };
+    
+//       handleChangeMaxDate = (event, date) => {
+//         this.setState({
+//           maxDate: date,
+//         });
+//       };
+    
+//       handleToggle = (event, toggled) => {
+//         this.setState({
+//           [event.target.name]: toggled,
+//         });
+//       };
+    
+//       render() {
+//         const startDate = new Date();
+//         return (
+//             <MuiThemeProvider muiTheme={getMuiTheme()}>
+//           <div>
+//             <div style={optionsStyle}>
+//               <DatePicker
+//                 onChange={this.handleChangeMinDate}
+//                 autoOk={true}
+//                 floatingLabelText="Min Date"
+//                 defaultDate={this.state.minDate}
+//                 disableYearSelection={this.state.disableYearSelection}
+//                 shouldDisableDate={disablePrevDates(startDate)}
+//               />
+//               <DatePicker
+//                 onChange={this.handleChangeMaxDate}
+//                 autoOk={true}
+//                 floatingLabelText="Max Date"
+//                 defaultDate={this.state.maxDate}
+//                 disableYearSelection={this.state.disableYearSelection}
+//                 shouldDisableDate={disablePrevDates(startDate)}
+//               />
+             
+             
+//             </div>
+//           </div>
+//           </MuiThemeProvider>
+//         );
+//       }
+//     }
+
+
+// export default DatePickerExample;
