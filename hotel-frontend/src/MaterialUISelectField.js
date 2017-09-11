@@ -3,14 +3,9 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import getMuiTheme        from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
+import MoreOptionComponent from './MoreOptionComponent'
 // import axios              from 'axios';
 
-import FloatingActionButton from 'material-ui/FloatingActionButton';
-import ContentAdd from 'material-ui/svg-icons/content/unarchive';
-
-const style = {
-  margin: 12,
-};
 
 let content ;
 class MaterialUISelectField extends Component {
@@ -22,8 +17,6 @@ class MaterialUISelectField extends Component {
           selected: false,
           value: 1
     };
-
-  
     }
     
       handleChange = (event, index, value) => {this.setState({value});
@@ -40,11 +33,9 @@ class MaterialUISelectField extends Component {
    }
     }
 
-
-
       render() {
         content = this.state.selected 
-    	? <div> Content </div>
+    	? <MoreOptionComponent/>
       : null;
 
    
@@ -52,11 +43,9 @@ class MaterialUISelectField extends Component {
           <div> 
             <MuiThemeProvider muiTheme={getMuiTheme()}>
             <SelectField
-              floatingLabelText="Frequency"
+              floatingLabelText="Number of persons"
               value={this.state.value}
-              onChange={this.handleChange}
-          
-            >
+              onChange={this.handleChange}  >
               <MenuItem value={1} primaryText="1 Room, 2 Adults, 0 Children" />
               <MenuItem value={2} primaryText="1 Room, 1 Adults, 0 Children" />
               <MenuItem value={3} primaryText="More Options" />
@@ -64,14 +53,7 @@ class MaterialUISelectField extends Component {
             </SelectField>
             </MuiThemeProvider>
 
-            <MuiThemeProvider muiTheme={getMuiTheme()}>
-            <FloatingActionButton mini={true} style={style}>
-      <ContentAdd />
-    </FloatingActionButton>
-            </MuiThemeProvider>
-
-            {console.log(this.state.value)}
-            {console.log(this.state.selected)}
+            
             {content}
         
           </div>
