@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import './App.css'
 import MaterialUIAutocomplete from './MaterialUIAutocomplete'
 import MaterialUIDatePicker from './MaterialUIDatePicker'
+import MaterialUISelectField from './MaterialUISelectField'
 
 
 class App extends Component {
@@ -11,6 +12,7 @@ class App extends Component {
       <div className="App">
        <MaterialUIAutocomplete/>
        <MaterialUIDatePicker/>
+      < MaterialUISelectField />
       </div>
     );
   }

@@ -17,14 +17,14 @@ class MaterialUIAutocomplete extends Component {
 
     render() {
         return (<div> <DateRangePicker
-  startDate={this.state.startDate} // momentPropTypes.momentObj or null,
-  endDate={this.state.endDate} // momentPropTypes.momentObj or null,
-  onDatesChange= {({ startDate, endDate }) => this.setState({ startDate, endDate })} // PropTypes.func.isRequired,
-  focusedInput={this.state.focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
-  onFocusChange={focusedInput => this.setState({ focusedInput })} // PropTypes.func.isRequired,
+  startDate={this.state.startDate} 
+  endDate={this.state.endDate} 
+  onDatesChange= {({ startDate, endDate }) => this.setState({ startDate, endDate })} 
+  focusedInput={this.state.focusedInput} 
+  onFocusChange={focusedInput => this.setState({ focusedInput })}
 />
 
-<div> {console.log(this.state.endDate)} </div>
+<div> {console.log(this.state.endDate._d)} </div>
 </div> )
 }
 }
