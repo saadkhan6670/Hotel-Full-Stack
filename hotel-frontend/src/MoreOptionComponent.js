@@ -3,38 +3,26 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import getMuiTheme        from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
-// import axios              from 'axios';
+import AgeofChildren from './AgeofChildren'
+import _ from 'lodash';
 
-const items1 = [(
-  <div>
-  <MenuItem key={0} value={0} primaryText="0 Children" />
-  <MenuItem key={1} value={1} primaryText="1 Children" />
+const items1 = [
+  
+  <MenuItem key={0} value={0} primaryText="0 Children" />,
+  <MenuItem key={1} value={1} primaryText="1 Children" />,
   <MenuItem key={2} value={2} primaryText="2 Children" />
-  </div>
-)];
+  
+];
 
-const items2 = [(
-  <div>
-  <MenuItem key={0} value={0} primaryText="0 Children" />
-  <MenuItem key={1} value={1} primaryText="1 Children" />
-  </div>
-)];
-
-const items3 = [(
-  <div>
-  <MenuItem key={0} value={0} primaryText="0 Children" />
-  </div>
-)];
-
-let item ;
-
+let item , content, ageComponent ;
 class MoreOptionComponent extends Component {
 
   constructor() {
     super();
   
   this.state = { 
-      selected: false,
+      selected1: false,
+      selected2: false,
       Adultvalue: 0,
       Childvalue: 0
 };
@@ -42,21 +30,51 @@ class MoreOptionComponent extends Component {
 
   handleChange = (event, index, value) => {this.setState({ Adultvalue : value });
   if(value === 3){
-   return item = items2
+    return item =_.dropRight(items1,1 )
+ 
   }
   else if(value === 4){
-   return item = items3
+    return item =_.dropRight(items1,2 )
+ 
   }
   else { 
-   return item = items1
+    return item = items1
   }
 
  }
 
  handleChange2 = (event, index, value) => {this.setState({ Childvalue : value });
-console.log ("Childvalue= " + value)}
+ if(value === 1){
+  this.setState({
+    selected1 : true,
+    selected2 : false
+
+  })
+  ageComponent = <AgeofChildren/>
+}
+
+if(value === 2){
+  this.setState({
+    selected1 : false,
+    selected2 : true
+
+  })
+  ageComponent = <div> <AgeofChildren/> <AgeofChildren/>  </div> 
+}
+
+else {
+  this.setState({
+    selected : false
+  })
+}
+
+}
 
       render() {
+        content = this.state.selected 
+        ? ageComponent
+        : null;
+  
         return (
           <div> 
             <h3> Room 1 </h3>
@@ -81,6 +99,7 @@ console.log ("Childvalue= " + value)}
              
             </SelectField>
             </MuiThemeProvider>
+            {content}
           </div>
         );
       }
