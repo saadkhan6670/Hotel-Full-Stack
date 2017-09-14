@@ -14,15 +14,17 @@ const items1 = [
   
 ];
 
-let item , content, ageComponent ;
+let item , content ;
+let ageComponent1 =   <AgeofChildren/>  ;
+let ageComponent2 = <div> <AgeofChildren/> <AgeofChildren/>  </div> ;
+
 class MoreOptionComponent extends Component {
 
   constructor() {
     super();
   
   this.state = { 
-      selected1: false,
-      selected2: false,
+      selected: false,
       Adultvalue: 0,
       Childvalue: 0
 };
@@ -45,36 +47,25 @@ class MoreOptionComponent extends Component {
 
  handleChange2 = (event, index, value) => {this.setState({ Childvalue : value });
  if(value === 1){
-  this.setState({
-    selected1 : true,
-    selected2 : false
+  
+  content =  ageComponent1;
 
-  })
-  ageComponent = <AgeofChildren/>
 }
 
-if(value === 2){
-  this.setState({
-    selected1 : false,
-    selected2 : true
-
-  })
-  ageComponent = <div> <AgeofChildren/> <AgeofChildren/>  </div> 
+else if (value === 2){
+  
+  content = ageComponent2 ;
 }
 
 else {
-  this.setState({
-    selected : false
-  })
+  content = '' ;
 }
+
 
 }
 
       render() {
-        content = this.state.selected 
-        ? ageComponent
-        : null;
-  
+       
         return (
           <div> 
             <h3> Room 1 </h3>
@@ -100,6 +91,7 @@ else {
             </SelectField>
             </MuiThemeProvider>
             {content}
+           
           </div>
         );
       }

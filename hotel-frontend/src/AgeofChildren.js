@@ -11,19 +11,19 @@ class AgeofChildren extends Component {
   
   this.state = { 
       selected: false,
-      Adultvalue: 0,
-      Childvalue: 0
+      value: 0,
+ 
 };
 }
 
-handleChange = (event, index, value) => {this.setState({ Adultvalue : value });}
+handleageofchildren = (event, index, value) => {this.setState({ value : value });}
 
 render() {
     return (
 <MuiThemeProvider muiTheme={getMuiTheme()}>
         <SelectField
           floatingLabelText="Age of children"
-          value={this.state.Adultvalue}
+          value={this.state.value}
           onChange={this.handleageofchildren}
           >
           <MenuItem key={1} value={1} primaryText="< 1" />
