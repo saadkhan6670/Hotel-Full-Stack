@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
-
+import AppState from './stores/Appstate'
+import {Provider} from 'mobx-react';
 import registerServiceWorker from './registerServiceWorker';
 
 ReactDOM.render(
-  <App />,
+  <Provider  Hotel={AppState}>
+  <App/>
+  </Provider> ,
   document.getElementById('root')
 );
 registerServiceWorker();
