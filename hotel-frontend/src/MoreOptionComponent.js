@@ -17,7 +17,6 @@ class MoreOptionComponent extends Component {
 
 handelAdd = () => { 
  
-d
 
  }
   
