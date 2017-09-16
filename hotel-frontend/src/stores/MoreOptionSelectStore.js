@@ -13,8 +13,6 @@ class MoreOptionSelect {
     @observable clearRoom3Button = false ;
     @observable clearRoom4Button = false ;
     @observable clearAddButton = false ;
-
-    
 }
 
 
