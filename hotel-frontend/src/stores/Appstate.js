@@ -1,11 +1,12 @@
-import { observable, action } from 'mobx';
+import { observable } from 'mobx';
 
 class Hotel {
-    @observable test = true;
-    @observable clear ;
-
-    
-}
+    @observable room2 = '' ;
+    @observable room3 = '' ;
+    @observable room4 = '' ;
+    @observable count = 1;
+ 
+            }
 
 
 const store = new Hotel();

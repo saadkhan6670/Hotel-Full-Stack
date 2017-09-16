@@ -5,6 +5,10 @@ import getMuiTheme        from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
 import AgeofChildren from './AgeofChildren'
 import _ from 'lodash';
+import { inject, observer } from 'mobx-react';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Contentclear from 'material-ui/svg-icons/content/clear';
+
 
 
 const items1 = [
@@ -19,41 +23,48 @@ let item , content;
 let ageComponent1 =   <AgeofChildren/>  ;
 let ageComponent2 = <div> <AgeofChildren/> <AgeofChildren/>  </div> ;
 
-class MoreOptionSelect extends Component {
+@inject('MoreOptionSelectStore', 'Hotel')
+@observer
+class RoomSelect4 extends Component {
 
-  constructor() {
-    super();
+  handelClear = () => { 
+    
+        let { Hotel ,MoreOptionSelectStore } = this.props;
+          Hotel.room4 = ''  
+          Hotel.count --
+          MoreOptionSelectStore.clearRoom3Button = false
+          MoreOptionSelectStore.clearAddButton = false
+        }
+
+
+  handleChange = (event, index, value) => {
+    let  {MoreOptionSelectStore} = this.props;
+   MoreOptionSelectStore.AdultvalueRoom4 = value 
   
-  this.state = { 
-      test : '',
-      selected: false,
-      Adultvalue: 0,
-      Childvalue: 0
-};
-}
-
-  handleChange = (event, index, value) => {this.setState({ Adultvalue : value });
   if(value === 3){
-    this.setState({ Childvalue : 0 })
+    MoreOptionSelectStore.ChildvalueRoom4 = 0;
     content = ''
     return item =_.dropRight(items1,1 )
  
   }
   else if(value === 4){
-    this.setState({ Childvalue : 0 })
+    MoreOptionSelectStore.ChildvalueRoom4 = 0;
     content = ''
     return item =_.dropRight(items1,2 )
 
   }
   else { 
-    this.setState({ Childvalue : 0 })
+    MoreOptionSelectStore.Childvalue = 0;
     content = ''
     return item = items1
   }
 
  }
 
- handleChange2 = (event, index, value) => {this.setState({ Childvalue : value });
+ handleChange2 = (event, index, value) => { 
+  let  {MoreOptionSelectStore} = this.props;
+   
+  MoreOptionSelectStore.Childvalue = value;
  if(value === 1){
   
   content =  ageComponent1;
@@ -68,14 +79,15 @@ else {
 }}
 
       render() {
+        let  {MoreOptionSelectStore} = this.props;
        
         return (
           <div> 
-            <h3> Room 1 </h3>
+            <h4> Room 4 </h4>
             <MuiThemeProvider muiTheme={getMuiTheme()}>
             <SelectField
               floatingLabelText="Adults (+12)"
-              value={this.state.Adultvalue}
+              value={MoreOptionSelectStore.Adultvalue}
               onChange={this.handleChange}
               >
               <MenuItem key={1} value={1} primaryText="1 Adult" />
@@ -87,16 +99,26 @@ else {
             <MuiThemeProvider muiTheme={getMuiTheme()}>
             <SelectField
               floatingLabelText="Children (0-11)"
-              value={this.state.Childvalue}
+              value={MoreOptionSelectStore.Childvalue}
               onChange={this.handleChange2} >
               {item}
              
             </SelectField>
             </MuiThemeProvider>
             {content}
+            <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <FloatingActionButton 
+        mini={true}
+        onClick={this.handelClear }
+        disabled={MoreOptionSelectStore.clearRoom4Button} 
+        >
+          <Contentclear />
+        </FloatingActionButton>
+        
+        </MuiThemeProvider>
   
           </div>
         );
       }
     }
-  export default MoreOptionSelect;
+  export default RoomSelect4;

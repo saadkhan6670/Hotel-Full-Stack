@@ -5,15 +5,13 @@ import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
 import React, {Component} from 'react';
 import { inject, observer } from 'mobx-react';
 
-
-
 @inject('Hotel')
 @observer
 class ClearComponent extends Component {
 
   handelClear = () => { 
     let { Hotel } = this.props;
-      Hotel.clear = ''  
+      Hotel.test = false  
     }
 
   render() {
