@@ -10,7 +10,7 @@ import RoomSelect4 from './RoomSelect4'
 import { inject, observer } from 'mobx-react';
 
 
-@inject('Hotel','MoreOptionSelectStore' )
+@inject('Hotel','MoreOptionSelectStore')
 @observer
 class MoreOptionComponent extends Component {
 

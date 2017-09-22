@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
-
 import './App.css'
-import MaterialUIAutocomplete from './MaterialUIAutocomplete'
-import MaterialUIDatePicker from './MaterialUIDatePicker'
-import MaterialUISelectField from './MaterialUISelectField'
+import SearchComponent from './SearchComponent'
 
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-       <MaterialUIAutocomplete/>
-       <MaterialUIDatePicker/>
-      < MaterialUISelectField />
+        <SearchComponent/>
       </div>
     );
   }
