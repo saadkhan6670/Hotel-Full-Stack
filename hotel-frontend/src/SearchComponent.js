@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-import {AutoComplete, SelectField, MenuItem, FloatingActionButton}   from 'material-ui';
+import {AutoComplete, SelectField, MenuItem, FloatingActionButton, RaisedButton}   from 'material-ui';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentSearch from 'material-ui/svg-icons/content/filter-list';
 import RoomSelect from './RoomSelect'
 import getMuiTheme        from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
@@ -29,7 +30,7 @@ class SearchComponent extends Component {
   onUpdateInputAC(inputValue) {
     const self = this;
     this.setState({
-      inputValue: inputValue
+     inputValue: inputValue
     }, function() {
       self.performSearch();
     });
@@ -110,7 +111,15 @@ handleChangeSF = (event, index, value) => {this.setState({value});
             </SelectField>
             </MuiThemeProvider>
                 {content}
-
+            <div> 
+              
+              {/* Search button */}
+          <MuiThemeProvider muiTheme={getMuiTheme()}>
+          <RaisedButton label="Search "
+          icon={<ContentSearch/>} 
+          secondary={true} />
+          </MuiThemeProvider>
+          </div>
   </div>
 
     )
@@ -124,8 +133,7 @@ const MoreOptionComponent = () => (
     <MuiThemeProvider muiTheme={getMuiTheme()}>
     <FloatingActionButton 
     mini={true}
-    onClick = { this.handelAdd }
-    >
+    onClick = { this.handelAdd } >
     <ContentAdd />
     </FloatingActionButton>
     </MuiThemeProvider>

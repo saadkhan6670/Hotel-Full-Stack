@@ -7,12 +7,11 @@ exports.SearchAll = function (req, res) {
 
     let search = req.params.hotel;
 
-    Hotels.find({ 'name': { $regex: search, $options: 'i' } } , (err,  data) => {
-        if (data.length == 0 ) {
-           res.send("this is an erro")
+    Hotels.find({ 'name': { $regex: search, $options: 'i' } } , (err,data) => {
+        if(err) {
+            res.send(err)
         }
-        else {
-            console.log("data hit")
+        else{
             res.send(data);
         }
     })
