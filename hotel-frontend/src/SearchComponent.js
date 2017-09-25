@@ -117,4 +117,6 @@ const MoreOptionComponent = () => (
     </div>
 );
 
+
+
 export default SearchComponent;
