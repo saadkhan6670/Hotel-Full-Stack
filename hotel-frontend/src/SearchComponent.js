@@ -5,60 +5,28 @@ import ContentSearch from 'material-ui/svg-icons/content/filter-list';
 import RoomSelect from './RoomSelect'
 import getMuiTheme        from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
-import axios              from 'axios';
+
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
+import { inject, observer } from 'mobx-react';
 
 let content ;
-const URL = 'http://localhost:5000/hotel/show-hotels/';
 
+
+
+@inject('Hotel')
+@observer
 class SearchComponent extends Component {
   constructor(props) {
     super(props);
-    this.onUpdateInputAC = this.onUpdateInputAC.bind(this);
     this.state = {
-      dataSource : [],
-      inputValue : '',
-      startDate : '',
-      endDate : '',
+
       focusedInput : '',
       selected: false,
       value: 1
     }
   }
 
-  onUpdateInputAC(inputValue) {
-    const self = this;
-    this.setState({
-     inputValue: inputValue
-    }, function() {
-      self.performSearch();
-    });
-  }
-
-  performSearch() {
-    const
-      self = this,
-      url  = URL + this.state.inputValue;
-
-    if(this.state.inputValue !== '') {
-      axios.get(url)
-        .then( (response) => {
-        let searchResults, retrievedSearchTerms;
-
-        searchResults = response.data;
-     
-        retrievedSearchTerms = searchResults.map(function(result) {
-         return result.name;
-         
-        });
-
-        self.setState({
-          dataSource: retrievedSearchTerms
-        });
-    })
-  }
-}
 
 handleChangeSF = (event, index, value) => {this.setState({value});
 
@@ -75,26 +43,30 @@ handleChangeSF = (event, index, value) => {this.setState({value});
     }
   
   render() {
+
+    let {  Hotel } = this.props
+
     content = this.state.selected 
     ? <MoreOptionComponent/>
   : null;
 
     return  ( <div>
+      
             {/* Autocomplete */}
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <AutoComplete
       hintText="Search Destination"
-        dataSource    = {this.state.dataSource}
-        onUpdateInput = {this.onUpdateInputAC}
+        dataSource    = {Hotel.dataSource}
+        onUpdateInput = {e => Hotel.onUpdateInputAC(e)}
         filter = {AutoComplete.caseInsensitiveFilter }/>
     </MuiThemeProvider> 
 
                  {/* DateRang */}
     <div>
     <DateRangePicker
-    startDate={this.state.startDate} 
-    endDate={this.state.endDate} 
-    onDatesChange= {({ startDate, endDate }) => this.setState({ startDate, endDate })} 
+    startDate={Hotel.check_in} 
+    endDate={Hotel.check_out} 
+    onDatesChange= { e => Hotel.onDatesChange({e})} 
     focusedInput={this.state.focusedInput} 
     onFocusChange={focusedInput => this.setState({ focusedInput })}
   />
@@ -120,7 +92,11 @@ handleChangeSF = (event, index, value) => {this.setState({value});
           secondary={true} />
           </MuiThemeProvider>
           </div>
+
+
   </div>
+
+
 
     )
   }
