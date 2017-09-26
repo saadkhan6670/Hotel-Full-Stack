@@ -19,13 +19,12 @@ class RoomData {
 
 class Search {
     @observable destination = '';
-    @observable dataSource = [];
-    @observable check_in= '';
-    @observable check_out='';
+    @observable dataSource = [].slice();
+    @observable dates = { checkIn:'' , checkOut :''}
     @observable room_mode= '';
     @observable rooms = [] ;
 
-    @action addComment(adults,children,age1,age2){
+    @action addRoom(adults,children,age1,age2){
         this.rooms.push( new RoomData(adults,children,age1,age2) )
        }
 
@@ -49,13 +48,6 @@ class Search {
                 this.dataSource = retrievedSearchTerms
             })
           }
-        }
-
-        @action onDatesChange(startDate,endDate){
-
-        this.check_in = startDate;
-        this.check_out = endDate;
-
         }
        }
 

@@ -30,10 +30,13 @@ class SearchComponent extends Component {
 
 handleChangeSF = (event, index, value) => {this.setState({value});
 
-      if(value === 3 ){
-        this.setState({
+let {  Hotel } = this.props
+      if(value === 3 ){ 
+        this.setState ({
           selected : true
-        })
+         })
+        Hotel.rooms.push (<MoreOptionComponent/>)
+
    }
    else {
      this.setState ({
@@ -47,7 +50,7 @@ handleChangeSF = (event, index, value) => {this.setState({value});
     let {  Hotel } = this.props
 
     content = this.state.selected 
-    ? <MoreOptionComponent/>
+    ? Hotel.rooms.map((data) => {return data})
   : null;
 
     return  ( <div>
@@ -64,12 +67,16 @@ handleChangeSF = (event, index, value) => {this.setState({value});
                  {/* DateRang */}
     <div>
     <DateRangePicker
-    startDate={Hotel.check_in} 
-    endDate={Hotel.check_out} 
-    onDatesChange= { e => Hotel.onDatesChange({e})} 
+
+    
+    startDate={Hotel.dates.checkIn} 
+    endDate={Hotel.dates.checkOut} 
+    onDatesChange= {({startDate, endDate}) => { Hotel.dates.checkIn = startDate;  Hotel.dates.checkOut =  endDate} }
     focusedInput={this.state.focusedInput} 
     onFocusChange={focusedInput => this.setState({ focusedInput })}
+   
   />
+
   </div>
                     {/* SelectField */} 
               <MuiThemeProvider muiTheme={getMuiTheme()}>
@@ -94,6 +101,7 @@ handleChangeSF = (event, index, value) => {this.setState({value});
           </div>
 
 
+
   </div>
 
 
@@ -104,8 +112,12 @@ handleChangeSF = (event, index, value) => {this.setState({value});
 
 
 const MoreOptionComponent = () => (
+
+
+    
+  
     <div>
-    <RoomSelect/>
+      <RoomSelect/>
     <MuiThemeProvider muiTheme={getMuiTheme()}>
     <FloatingActionButton 
     mini={true}
@@ -116,7 +128,6 @@ const MoreOptionComponent = () => (
     Add another room (4 max) 
     </div>
 );
-
 
 
 export default SearchComponent;
