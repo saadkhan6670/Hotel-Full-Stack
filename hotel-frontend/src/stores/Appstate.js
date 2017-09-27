@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx';
+import { observable, action,toJS } from 'mobx';
 import axios from 'axios';
 
 const URL = 'http://localhost:5000/hotel/show-hotels/';
@@ -7,24 +7,14 @@ const URL = 'http://localhost:5000/hotel/show-hotels/';
 
 class Search {
     @observable destination = '';
-    @observable dataSource = [];
+    @observable dataSource = ([]) ;
+    
     @observable dates = { checkIn:'' , checkOut :''}
     @observable room_mode= '';
     @observable rooms = [] ;
-    @observable hotelsdata = new RoomData()
-
-    @observable HotelData = {
-        adults: '',
-        children: '',
-        age1: '',
-        age2: ''
-
-    }
-
-
 
     @action addRoom(adults,children,age1,age2){
-        this.rooms.push( )
+        this.rooms.push(new RoomData(adults,children,age1,age2))
        }
 
        @action onUpdateInputAC(data) {
@@ -48,10 +38,12 @@ class Search {
             })
           }
         }
+      
        }
 
        class RoomData {
-        @observable adults = "ahsan"
+        id = Math.random();
+        @observable adults = '';
         @observable children = '';
         @observable age1 = '';
         @observable age2 = '';
@@ -64,6 +56,7 @@ class Search {
         }
  
     }
+    
 
 
 const store = new Search() ;

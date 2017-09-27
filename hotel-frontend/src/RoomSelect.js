@@ -64,14 +64,11 @@ class RoomSelect extends Component {
   render() {
     let { Hotel, MoreOptionSelectStore } = this.props;
 
-    let content = Hotel.rooms.map((c, index) => { return })
-
+    const content = Hotel.rooms.map(c => ( {c} ))
 
     return (
       <div>
-        <h4> Room {Hotel.rooms.map(room => {
-          { room }
-        })} </h4>
+        <h4> Room  </h4>
         <MuiThemeProvider muiTheme={getMuiTheme()}>
           <SelectField
             floatingLabelText="Adults (+12)"
@@ -125,7 +122,7 @@ class AgeofChildren extends Component {
           value={this.state.value}
           onChange={this.handleageofchildren}
         >
-          <MenuItem key={0} value={0} primaryText="< 1" />
+          <MenuItem key={0} value={0} primaryText="<1" />
           <MenuItem key={1} value={1} primaryText="1" />
           <MenuItem key={2} value={2} primaryText="2" />
           <MenuItem key={3} value={3} primaryText="3" />
