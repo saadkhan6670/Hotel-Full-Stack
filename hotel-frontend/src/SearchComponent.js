@@ -31,11 +31,13 @@ class SearchComponent extends Component {
 handleChangeSF = (event, index, value) => {this.setState({value});
 
 let {  Hotel } = this.props
+
       if(value === 3 ){ 
         this.setState ({
           selected : true
          })
-        Hotel.rooms.push (<MoreOptionComponent/>)
+         console.log(Hotel)
+         Hotel.rooms.push (<RoomSelect rooms={Hotel.HotelData}/>)
 
    }
    else {
@@ -66,15 +68,12 @@ let {  Hotel } = this.props
 
                  {/* DateRang */}
     <div>
-    <DateRangePicker
-
-    
+    <DateRangePicker    
     startDate={Hotel.dates.checkIn} 
     endDate={Hotel.dates.checkOut} 
     onDatesChange= {({startDate, endDate}) => { Hotel.dates.checkIn = startDate;  Hotel.dates.checkOut =  endDate} }
     focusedInput={this.state.focusedInput} 
     onFocusChange={focusedInput => this.setState({ focusedInput })}
-   
   />
 
   </div>
@@ -90,6 +89,8 @@ let {  Hotel } = this.props
             </SelectField>
             </MuiThemeProvider>
                 {content}
+           
+                
             <div> 
               
               {/* Search button */}
@@ -99,25 +100,16 @@ let {  Hotel } = this.props
           secondary={true} />
           </MuiThemeProvider>
           </div>
-
-
-
   </div>
-
-
-
     )
   }
 }
 
 
-const MoreOptionComponent = () => (
-
-
-    
-  
+class AddButton extends Component {
+  render() {
+    return(
     <div>
-      <RoomSelect/>
     <MuiThemeProvider muiTheme={getMuiTheme()}>
     <FloatingActionButton 
     mini={true}
@@ -126,8 +118,9 @@ const MoreOptionComponent = () => (
     </FloatingActionButton>
     </MuiThemeProvider>
     Add another room (4 max) 
-    </div>
-);
+    </div>)}
+};
+
 
 
 export default SearchComponent;

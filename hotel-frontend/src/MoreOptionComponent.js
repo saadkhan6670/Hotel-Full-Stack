@@ -43,7 +43,7 @@ else {
 
         return (
           <div> 
-              <RoomSelect/>
+              <RoomSelect  room={}/>
               {Hotel.room2}
               {Hotel.room3}
               {Hotel.room4}
