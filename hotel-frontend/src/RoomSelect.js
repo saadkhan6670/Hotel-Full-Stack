@@ -21,8 +21,10 @@ class RoomSelect extends Component {
 
   handleChange = (event, index, value) => {
     let { Hotel, MoreOptionSelectStore } = this.props;
-    MoreOptionSelectStore.AdultvalueRoom1 = value
-  console.log(Hotel.adults)
+    Hotel.adults = value
+
+    console.log(Hotel.adults)
+    
     if (value === 3) {
       MoreOptionSelectStore.ChildvalueRoom1 = 0;
       age = ''
@@ -44,9 +46,11 @@ class RoomSelect extends Component {
   }
 
   handleChange2 = (event, index, value) => {
-    let { MoreOptionSelectStore } = this.props;
 
-    MoreOptionSelectStore.ChildvalueRoom1 = value;
+    let { Hotel } = this.props;
+
+    Hotel.children = value;
+    console.log(Hotel.children)
     if (value === 1) {
 
       age = <AgeofChildren />;
@@ -62,9 +66,7 @@ class RoomSelect extends Component {
   }
 
   render() {
-    let { Hotel, MoreOptionSelectStore } = this.props;
-
-    const content = Hotel.rooms.map(c => ( {c} ))
+    let { Hotel } = this.props;
 
     return (
       <div>
@@ -85,7 +87,7 @@ class RoomSelect extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme()}>
           <SelectField
             floatingLabelText="Children (0-11)"
-            value={MoreOptionSelectStore.ChildvalueRoom1}
+            value={Hotel.children}
             onChange={this.handleChange2} >
             {item}
 

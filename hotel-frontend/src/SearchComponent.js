@@ -23,6 +23,7 @@ class SearchComponent extends Component {
 
       focusedInput : '',
       selected: false,
+
       value: 1
     }
   }
@@ -36,8 +37,10 @@ let {  Hotel } = this.props
         this.setState ({
           selected : true
          })
+         Hotel.addRoom(Hotel.adults,Hotel.children,Hotel.age1,Hotel.age2)
+         console.log(Hotel.rooms)
          console.log(Hotel)
-         Hotel.rooms.push (<RoomSelect rooms={Hotel.HotelData}/>)
+       
 
    }
    else {
@@ -46,13 +49,14 @@ let {  Hotel } = this.props
      })
    }
     }
-  
+
+    
   render() {
 
     let {  Hotel } = this.props
 
     content = this.state.selected 
-    ? Hotel.rooms.map((data) => {return data})
+    ? <div> <RoomSelect/> <AddButton/> </div>
   : null;
 
     return  ( <div>
@@ -97,6 +101,7 @@ let {  Hotel } = this.props
           <MuiThemeProvider muiTheme={getMuiTheme()}>
           <RaisedButton label="Search "
           icon={<ContentSearch/>} 
+    
           secondary={true} />
           </MuiThemeProvider>
           </div>
@@ -106,10 +111,36 @@ let {  Hotel } = this.props
 }
 
 
-class AddButton extends Component {
+@observer class AddButton extends Component {
+  constructor() {
+    super();
+    this.state = {
+      focusedInput : '',
+      select2 : false,
+
+    }
+  }
+  
+  handelAdd = () => {
+    let {  Hotel } = this.props
+  
+      this.setState ({
+        selected2 : true
+       })
+
+
+    Hotel.addRoom(Hotel.adults,Hotel.children,Hotel.age1,Hotel.age2)
+    console.log(Hotel.rooms)
+
+  }
   render() {
+    content = this.state.selected2 
+    ? <div> <RoomSelect/> <AddButton/> </div>
+  : null;
     return(
     <div>
+      {content}
+
     <MuiThemeProvider muiTheme={getMuiTheme()}>
     <FloatingActionButton 
     mini={true}
