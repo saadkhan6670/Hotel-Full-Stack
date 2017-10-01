@@ -1,36 +1,36 @@
-import { observable, action } from 'mobx';
+import { observable, action, toJS } from 'mobx';
 import axios from 'axios';
-
 const URL = 'http://localhost:5000/hotel/show-hotels/';
 
 class RoomData {
-    id = Math.random();
 
-    @observable adults = '';
-    @observable children = '';
+    id ;
+    @observable adults = 2;
+    @observable children = 0;
     @observable age1 = '';
     @observable age2 = '';
 
     constructor(adults,children,age1,age2) {
-
-        this.adults = adults
+        this.id = Math.random()
+       this.adults = adults
         this.children = children
         this.age1 = age1
         this.age2 = age2
     }
-
 }
 
+const rooms = observable ([])
 class Search extends RoomData {
     @observable destination = '';
-    @observable dataSource = [] ;
+   @observable dataSource = [];
     @observable dates = { checkIn:'' , checkOut :''}
+
     @observable room_mode= '';
-    @observable rooms = [] ;
+  
+    rooms = toJS(rooms)
 
-
-    @action addRoom(adults,children,age1,age2){
-        this.rooms.push(new RoomData(adults,children,age1,age2))
+    @action addRoom(){
+        this.rooms.push(new RoomData())
        }
 
        @action onUpdateInputAC(data) {

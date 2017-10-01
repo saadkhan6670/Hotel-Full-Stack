@@ -5,58 +5,59 @@ import ContentSearch from 'material-ui/svg-icons/content/filter-list';
 import RoomSelect from './RoomSelect'
 import getMuiTheme        from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
-
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { inject, observer } from 'mobx-react';
 
-let content ;
-
-
+let content, roomcomponent
 
 @inject('Hotel')
 @observer
 class SearchComponent extends Component {
   constructor(props) {
-    super(props);
+		super(props);
+    this.Hotel = this.props.Hotel;
     this.state = {
+            focusedInput : '',
+            selected: false,
+            flag: false,
+            value: ''       
+          }
+}
 
-      focusedInput : '',
-      selected: false,
-
-      value: 1
-    }
-  }
 
 
 handleChangeSF = (event, index, value) => {this.setState({value});
 
-let {  Hotel } = this.props
+if(value ===  1 | value === 2 ) {
+this.setState ({
+     selected : false,
+     flag: false
+    })
+    this.Hotel.rooms = []
+  }
 
-      if(value === 3 ){ 
-        this.setState ({
-          selected : true
-         })
-         Hotel.addRoom(Hotel.adults,Hotel.children,Hotel.age1,Hotel.age2)
-         console.log(Hotel.rooms)
-         console.log(Hotel)
-       
+if(value === 3 && this.state.flag === false){ 
+  this.setState ({
+    selected : true,
+    flag: true
+   })
 
-   }
-   else {
-     this.setState ({
-      selected : false
-     })
-   }
+   this.Hotel.addRoom()
+   console.log(this.Hotel.rooms)
+}
     }
 
-    
+  
+
   render() {
-
-    let {  Hotel } = this.props
-
+    roomcomponent = this.Hotel.rooms.map(room =>{
+      console.log(room)
+       return  <RoomSelect  room={room.id}/>
+      } )
+     
     content = this.state.selected 
-    ? <div> <RoomSelect/> <AddButton/> </div>
+    ? <div> {roomcomponent} <AddButton/> </div>
   : null;
 
     return  ( <div>
@@ -65,22 +66,24 @@ let {  Hotel } = this.props
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <AutoComplete
       hintText="Search Destination"
-        dataSource    = {Hotel.dataSource}
-        onUpdateInput = {e => Hotel.onUpdateInputAC(e)}
+        dataSource    = { this.Hotel.dataSource}
+        onUpdateInput = {e =>  this.Hotel.onUpdateInputAC(e)}
         filter = {AutoComplete.caseInsensitiveFilter }/>
     </MuiThemeProvider> 
 
                  {/* DateRang */}
-    <div>
-    <DateRangePicker    
-    startDate={Hotel.dates.checkIn} 
-    endDate={Hotel.dates.checkOut} 
-    onDatesChange= {({startDate, endDate}) => { Hotel.dates.checkIn = startDate;  Hotel.dates.checkOut =  endDate} }
-    focusedInput={this.state.focusedInput} 
-    onFocusChange={focusedInput => this.setState({ focusedInput })}
-  />
+                 <div>
+                 <DateRangePicker    
+                 startDate={this.Hotel.dates.checkIn} 
+                 endDate={this.Hotel.dates.checkOut} 
+                 onDatesChange= {({startDate, endDate}) => { this.Hotel.dates.checkIn = startDate;  this.Hotel.dates.checkOut =  endDate} }
+                 focusedInput={this.state.focusedInput} 
+                 onFocusChange={focusedInput => this.setState({ focusedInput })}
+               />
 
-  </div>
+
+             
+               </div>
                     {/* SelectField */} 
               <MuiThemeProvider muiTheme={getMuiTheme()}>
               <SelectField
@@ -94,7 +97,6 @@ let {  Hotel } = this.props
             </MuiThemeProvider>
                 {content}
            
-                
             <div> 
               
               {/* Search button */}
@@ -110,10 +112,11 @@ let {  Hotel } = this.props
   }
 }
 
-
+@inject('Hotel')
 @observer class AddButton extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+		super(props);
+    this.Hotel = this.props.Hotel;
     this.state = {
       focusedInput : '',
       select2 : false,
@@ -121,26 +124,22 @@ let {  Hotel } = this.props
     }
   }
   
-  handelAdd = () => {
-    let {  Hotel } = this.props
-  
+  handelAdd = () => {  
       this.setState ({
         selected2 : true
        })
+       this.Hotel.addRoom()
+       console.log(this.Hotel.rooms)
 
-
-    Hotel.addRoom(Hotel.adults,Hotel.children,Hotel.age1,Hotel.age2)
-    console.log(Hotel.rooms)
 
   }
   render() {
     content = this.state.selected2 
-    ? <div> <RoomSelect/> <AddButton/> </div>
+    ? <div> {roomcomponent} </div>
   : null;
     return(
     <div>
       {content}
-
     <MuiThemeProvider muiTheme={getMuiTheme()}>
     <FloatingActionButton 
     mini={true}
