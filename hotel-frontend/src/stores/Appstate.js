@@ -1,9 +1,8 @@
-import { observable, action, toJS } from 'mobx';
+import { observable, action, autorun } from 'mobx';
 import axios from 'axios';
 const URL = 'http://localhost:5000/hotel/show-hotels/';
 
 class RoomData {
-
     id ;
     @observable adults = 2;
     @observable children = 0;
@@ -19,18 +18,17 @@ class RoomData {
     }
 }
 
-const rooms = observable ([])
+ 
 class Search extends RoomData {
     @observable destination = '';
-   @observable dataSource = [];
+    @observable dataSource = [];
     @observable dates = { checkIn:'' , checkOut :''}
-
     @observable room_mode= '';
-  
-    rooms = toJS(rooms)
+    @observable rooms =[]
+
 
     @action addRoom(){
-        this.rooms.push(new RoomData())
+       new RoomData()
        }
 
        @action onUpdateInputAC(data) {
@@ -53,12 +51,10 @@ class Search extends RoomData {
                 this.dataSource = retrievedSearchTerms
             })
           }
-        }
-      
-       }
+      }
 
-     
-
+      data = autorun(()=> console.log("Run from autonrun"))
+ }
 const store = new Search() ;
 
 export default (store);

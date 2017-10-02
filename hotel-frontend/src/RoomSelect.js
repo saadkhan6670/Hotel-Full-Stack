@@ -30,8 +30,7 @@ const agearray =[
 
 let item, AgeComponent;
 
-
-@inject('Hotel', 'MoreOptionSelectStore')
+@inject('Hotel')
 @observer
 class RoomSelect extends Component {
   constructor(props) {
@@ -46,7 +45,6 @@ class RoomSelect extends Component {
       this.Hotel.children = 0;
       AgeComponent = ''
       return item = _.dropRight(items1, 1)
-
     }
     else if (value === 4) {
       this.Hotel.children = 0;
@@ -63,8 +61,6 @@ class RoomSelect extends Component {
   }
 
   handleChange2 = (event, index, value) => {
-
-    console.log(index)
     
     this.Hotel.children = value;
     if (value === 1) {
