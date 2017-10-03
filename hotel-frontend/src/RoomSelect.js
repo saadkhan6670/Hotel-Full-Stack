@@ -40,20 +40,22 @@ class RoomSelect extends Component {
 
 
   handleChange = (event,index, value) => {
+
+    this.props.room.adults = value
       
     if (value === 3) {
-      this.Hotel.children = 0;
+      this.props.room.children = 0;
       AgeComponent = ''
       return item = _.dropRight(items1, 1)
     }
     else if (value === 4) {
-      this.Hotel.children = 0;
+      this.props.room.children = 0;
       AgeComponent = ''
       return item = _.dropRight(items1, 2)
 
     }
     else {
-      this.Hotel.children = 0;
+      this.props.room.children = 0;
       AgeComponent = ''
       return item = items1
     }
@@ -61,21 +63,23 @@ class RoomSelect extends Component {
   }
 
   handleChange2 = (event, index, value) => {
-    
-    this.Hotel.children = value;
+
+  this.props.room.children = value
+
     if (value === 1) {
 
-      AgeComponent = <AgeofChildren1/>;
+      AgeComponent = <AgeComponent1 props={this.props.room.age1}/>
     }
     else if (value === 2) {
 
-      AgeComponent = <div> <AgeofChildren1/> <AgeofChildren2/>  </div>;
     }
 
     else {
       AgeComponent = '';
     }
   }
+
+     
 
   render() {
 
@@ -96,7 +100,7 @@ class RoomSelect extends Component {
         <MuiThemeProvider muiTheme={getMuiTheme()}>
           <SelectField
             floatingLabelText="Children (0-11)"
-            value={this.Hotel.children}
+            value={this.props.room.children}
             onChange={this.handleChange2} >
             {item}
 
@@ -108,57 +112,76 @@ class RoomSelect extends Component {
   }
 }
 
+class AgeComponent1 extends RoomSelect { 
+
+  handleageofchildren2 = (event, index, value) => { 
+    this.props.room.age1 = value
+    console.log("age2 " + this.props.room.age1)
+   }
+   render() {
+    
+        return ( 
+        <div>
+     {console.log(this.props)}
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
+  <SelectField
+    floatingLabelText="Age of children"
+    value={this.props} 
+    onChange={this.handleageofchildren2} >
+   {agearray}
+  </SelectField>
+  </MuiThemeProvider> 
+    </div> 
+         ) }
+        }
+
+
+
 
 // ******* Age Of Children 1 ********
-@inject('Hotel')
-@observer
-class AgeofChildren1 extends Component  {
-  constructor(props) {
-		super(props);
-    this.Hotel = this.props.Hotel;
-  }
-  handleageofchildren1 = (event, index, value) => { 
-    this.Hotel.age1 = value
-    console.log("age1 " + this.Hotel.age1)
-   }
-  render() {
-    return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <SelectField
-          floatingLabelText="Age of children"
-          value={this.Hotel.age1} 
-          onChange={this.handleageofchildren1} >
-         {agearray}
-        </SelectField>
-      </MuiThemeProvider>
-    );
-  }
-}
+// @inject('Hotel')
+// @observer
+// class AgeofChildren1 extends Component  {
+//   constructor(props) {
+// 		super(props);
+//     this.Hotel = this.props.Hotel;
+//   }
+//   handleageofchildren1 = (event, index, value) => { 
+//     this.props.age.age1 = value
+//     console.log("age1 " + this.props.room.age1)
+//    }
+//   render() {
+//     return (
+//       <MuiThemeProvider muiTheme={getMuiTheme()}>
+//         <SelectField
+//           floatingLabelText="Age of children"
+//           value={this.props.age.age1} 
+//           onChange={this.handleageofchildren1} >
+//          {agearray}
+//         </SelectField>
+//       </MuiThemeProvider>
+//     );
+//   }
+// }
 
 // ******* Age Of Children 2 ********
-@inject('Hotel', 'MoreOptionSelectStore')
-@observer
-class AgeofChildren2 extends Component  {
-  constructor(props) {
-		super(props);
-    this.Hotel = this.props.Hotel;
+// @inject('Hotel')
+// @observer
+// class AgeofChildren2 extends Component  {
+//   constructor(props) {
+// 		super(props);
+//     this.Hotel = this.props.Hotel;
   
-  }
-  handleageofchildren2 = (event, index, value) => { 
-    this.Hotel.age2 = value
-    console.log("age2 " + this.Hotel.age2)
-   }
-  render() {
-    return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <SelectField
-          floatingLabelText="Age of children 2"
-          value={this.Hotel.age2} 
-          onChange={this.handleageofchildren2} >
-         {agearray}
-        </SelectField>
-      </MuiThemeProvider>
-    );
-  }
-}
+//   }
+//   handleageofchildren2 = (event, index, value) => { 
+//     this.props.age.age2 = value
+//     console.log("age2 " + this.props.room.age2)
+//    }
+//   render() {
+//     return (
+      
+//     );
+//   }
+// }
+
 export default RoomSelect;

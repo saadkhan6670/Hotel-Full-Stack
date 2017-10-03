@@ -25,16 +25,14 @@ class SearchComponent extends Component {
           }
 }
 
-
-
-handleChangeSF = (event, index, value) => {this.setState({value});
+handleChangeSF = (event, index, value) => {
+  
+  this.setState({value});
 
 if(value ===  1 | value === 2 ) {
 this.setState ({
-     selected : false,
-     flag: false
+     selected : false
     })
-    this.Hotel.rooms = []
   }
 
 if(value === 3 && this.state.flag === false){ 
@@ -42,18 +40,13 @@ if(value === 3 && this.state.flag === false){
     selected : true,
     flag: true
    })
-
    this.Hotel.addRoom()
-   console.log(this.Hotel.rooms)
 }
     }
-
-  
-
   render() {
-    roomcomponent = this.Hotel.rooms.map(room =>{
+    roomcomponent = this.Hotel.request.rooms.map(room =>{
       console.log(room)
-       return  <RoomSelect  room={room.id}/>
+       return  <RoomSelect room={room}/>
       } )
      
     content = this.state.selected 
@@ -66,7 +59,7 @@ if(value === 3 && this.state.flag === false){
     <MuiThemeProvider muiTheme={getMuiTheme()}>
       <AutoComplete
       hintText="Search Destination"
-        dataSource    = { this.Hotel.dataSource}
+        dataSource    = {this.Hotel.request.dataSource}
         onUpdateInput = {e =>  this.Hotel.onUpdateInputAC(e)}
         filter = {AutoComplete.caseInsensitiveFilter }/>
     </MuiThemeProvider> 
@@ -74,9 +67,9 @@ if(value === 3 && this.state.flag === false){
                  {/* DateRang */}
                  <div>
                  <DateRangePicker    
-                 startDate={this.Hotel.dates.checkIn} 
-                 endDate={this.Hotel.dates.checkOut} 
-                 onDatesChange= {({startDate, endDate}) => { this.Hotel.dates.checkIn = startDate;  this.Hotel.dates.checkOut =  endDate} }
+                 startDate={this.Hotel.request.dates.checkIn} 
+                 endDate={this.Hotel.request.dates.checkOut} 
+                 onDatesChange= {({startDate, endDate}) => { this.Hotel.request.dates.checkIn = startDate;  this.Hotel.request.dates.checkOut =  endDate} }
                  focusedInput={this.state.focusedInput} 
                  onFocusChange={focusedInput => this.setState({ focusedInput })}
                />
@@ -129,17 +122,11 @@ if(value === 3 && this.state.flag === false){
         selected2 : true
        })
        this.Hotel.addRoom()
-       console.log(this.Hotel.rooms)
-
-
   }
   render() {
-    content = this.state.selected2 
-    ? <div> {roomcomponent} </div>
-  : null;
+
     return(
     <div>
-      {content}
     <MuiThemeProvider muiTheme={getMuiTheme()}>
     <FloatingActionButton 
     mini={true}
