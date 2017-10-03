@@ -28,7 +28,9 @@ const agearray =[
   <MenuItem key={11} value={11} primaryText="11" />
 ]
 
-let item, AgeComponent;
+
+
+let item, AgeComponent, age1Comp=false;
 
 @inject('Hotel')
 @observer
@@ -36,7 +38,10 @@ class RoomSelect extends Component {
   constructor(props) {
 		super(props);
     this.Hotel = this.props.Hotel;
-	}
+
+  }
+
+  
 
 
   handleChange = (event,index, value) => {
@@ -61,25 +66,28 @@ class RoomSelect extends Component {
     }
 
   }
-
+  
   handleChange2 = (event, index, value) => {
 
   this.props.room.children = value
 
     if (value === 1) {
 
-      AgeComponent = <AgeComponent1 props={this.props.room.age1}/>
+      
+
     }
     else if (value === 2) {
 
     }
 
     else {
-      AgeComponent = '';
+      AgeComponent = null ;
     }
   }
 
-     
+  handleageofchildren = (event, index, value) => { 
+    this.props.room.age1 = value
+   }
 
   render() {
 
@@ -103,31 +111,37 @@ class RoomSelect extends Component {
             value={this.props.room.children}
             onChange={this.handleChange2} >
             {item}
-
           </SelectField>
         </MuiThemeProvider>
-        {AgeComponent}
+
+     <MuiThemeProvider muiTheme={getMuiTheme()}>
+     <SelectField
+       floatingLabelText="Age of children"
+       value={this.props.room.age1} 
+       onChange={this.handleageofchildren} >
+      {agearray}
+   </SelectField>
+   </MuiThemeProvider>
+
+   <AgeComponent1 age={this.props.room}/>
+
       </div>
     );
   }
 }
 
-class AgeComponent1 extends RoomSelect { 
-
-  handleageofchildren2 = (event, index, value) => { 
-    this.props.room.age1 = value
-    console.log("age2 " + this.props.room.age1)
-   }
-   render() {
-    
-        return ( 
+class  AgeComponent1 extends RoomSelect  {
+  render() {
+    console.log(this.props.age.age1)
+    return ( 
         <div>
-     {console.log(this.props)}
   <MuiThemeProvider muiTheme={getMuiTheme()}>
   <SelectField
     floatingLabelText="Age of children"
-    value={this.props} 
-    onChange={this.handleageofchildren2} >
+    value={this.props.age.age1} 
+    onChange={this.handleageofchildren=  (event, index, value) => { 
+    this.props.age.age1 = value
+   }} >
    {agearray}
   </SelectField>
   </MuiThemeProvider> 

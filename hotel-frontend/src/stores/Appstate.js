@@ -2,7 +2,8 @@ import { observable, action } from 'mobx';
 import axios from 'axios';
 import _ from 'lodash';
 const URL = 'http://localhost:5000/hotel/show-hotels/';
- 
+
+let retrievedSearchTerms;
 class RoomData {
     room = {
         adults: '',
@@ -13,7 +14,7 @@ class RoomData {
 
   @observable request = {
    destination : '',
-   dataSource : [],
+   dataSource : [],   
    dates : { checkIn:'' , checkOut :''} ,
    rooms : [] 
 }
@@ -29,17 +30,17 @@ class RoomData {
     
      let url =  URL + data
         
-            if(data !== '') {
+            if(data.length >= 3) {
               axios.get(url)
                 .then( (response) => {
-                let searchResults, retrievedSearchTerms;
-                searchResults = response.data;
+               
              
-                retrievedSearchTerms = searchResults.map(function(result) {
-                 return result.name;
+                retrievedSearchTerms = response.data.map(function(result) {
+                  return result.name;
                 });
 
-                this.request.dataSource = retrievedSearchTerms
+               return this.request.dataSource = retrievedSearchTerms
+      
             })
           }
       }

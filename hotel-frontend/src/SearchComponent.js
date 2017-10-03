@@ -21,8 +21,16 @@ class SearchComponent extends Component {
             focusedInput : '',
             selected: false,
             flag: false,
-            value: ''       
+            value: '',
+            dataSource: []
+
           }
+}
+
+handleUpdateInputAC = (value) => {
+
+  this.props.Hotel.onUpdateInputAC(value)
+  
 }
 
 handleChangeSF = (event, index, value) => {
@@ -46,7 +54,7 @@ if(value === 3 && this.state.flag === false){
   render() {
     roomcomponent = this.Hotel.request.rooms.map(room =>{
       console.log(room)
-       return  <RoomSelect room={room}/>
+       return  <RoomSelect key={Math.random()} room={room}/>
       } )
      
     content = this.state.selected 
@@ -60,7 +68,7 @@ if(value === 3 && this.state.flag === false){
       <AutoComplete
       hintText="Search Destination"
         dataSource    = {this.Hotel.request.dataSource}
-        onUpdateInput = {e =>  this.Hotel.onUpdateInputAC(e)}
+        onUpdateInput = { this.handleUpdateInputAC}
         filter = {AutoComplete.caseInsensitiveFilter }/>
     </MuiThemeProvider> 
 
