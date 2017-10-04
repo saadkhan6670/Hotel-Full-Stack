@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {AutoComplete, SelectField, MenuItem, FloatingActionButton, RaisedButton}   from 'material-ui';
 import ContentAdd from 'material-ui/svg-icons/content/add';
+import ContentClear from 'material-ui/svg-icons/content/clear';
 import ContentSearch from 'material-ui/svg-icons/content/filter-list';
 import RoomSelect from './RoomSelect'
 import getMuiTheme        from 'material-ui/styles/getMuiTheme';
@@ -22,7 +23,9 @@ class SearchComponent extends Component {
             selected: false,
             flag: false,
             value: '',
-            dataSource: []
+            dataSource: [],
+            addButtonDisable : false,
+            clearButtonDisable : true
 
           }
 }
@@ -51,15 +54,60 @@ if(value === 3 && this.state.flag === false){
    this.Hotel.addRoom()
 }
     }
+    handelClear() {
+    }
+
   render() {
-    roomcomponent = this.Hotel.request.rooms.map(room =>{
-      console.log(room)
-       return  <RoomSelect key={Math.random()} room={room}/>
+    // ********** ClearButton Component
+    let ClearButton = (
+      <div>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <FloatingActionButton 
+      mini={true}
+      onClick = {this.handelClear}
+      disabled = {this.state.clearButtonDisable}>
+      <ContentClear />
+      </FloatingActionButton>
+      </MuiThemeProvider>
+      </div>)
+      // ********** ClearButton Component end
+
+       // ********** AddButton Component
+    let AddButton = (
+      <div>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+      <FloatingActionButton 
+      mini={true}
+      onClick = { this.handelAdd =() => { 
+        if(this.Hotel.request.rooms.length === 1) {
+      this.setState ({
+        clearButtonDisable : false
+       }) } 
+        if(this.Hotel.request.rooms.length === 3 ) 
+      this.setState ({
+        addButtonDisable : true
+       })
+       this.Hotel.addRoom() } } 
+      disabled = {this.state.addButtonDisable} >
+      <ContentAdd />
+      </FloatingActionButton>
+      </MuiThemeProvider>
+      Add another room (4 max) 
+      </div>)
+      // ********** AddButton Component end
+
+      // ****** Component Mapping and passing it to RoomSelect file as a Prop
+    roomcomponent = this.Hotel.request.rooms.map((room,index) =>{
+       return  <RoomSelect key={Math.random()} room={room} index={index+1}/>
       } )
-     
+
+
+     // ****** Room Component and AddButton Checking flag
     content = this.state.selected 
-    ? <div> {roomcomponent} <AddButton/> </div>
+    ? <div> {roomcomponent} {ClearButton} {AddButton} </div>
   : null;
+
+  
 
     return  ( <div>
       
@@ -112,40 +160,5 @@ if(value === 3 && this.state.flag === false){
     )
   }
 }
-
-@inject('Hotel')
-@observer class AddButton extends Component {
-  constructor(props) {
-		super(props);
-    this.Hotel = this.props.Hotel;
-    this.state = {
-      focusedInput : '',
-      select2 : false,
-
-    }
-  }
-  
-  handelAdd = () => {  
-      this.setState ({
-        selected2 : true
-       })
-       this.Hotel.addRoom()
-  }
-  render() {
-
-    return(
-    <div>
-    <MuiThemeProvider muiTheme={getMuiTheme()}>
-    <FloatingActionButton 
-    mini={true}
-    onClick = { this.handelAdd } >
-    <ContentAdd />
-    </FloatingActionButton>
-    </MuiThemeProvider>
-    Add another room (4 max) 
-    </div>)}
-};
-
-
 
 export default SearchComponent;
