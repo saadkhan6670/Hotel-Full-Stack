@@ -28,70 +28,90 @@ const agearray =[
   <MenuItem key={11} value={11} primaryText="11" />
 ]
 
-
-
-let item, AgeComponent;
+let item;
 
 @inject('Hotel')
 @observer
 class RoomSelect extends Component {
   constructor(props) {
 		super(props);
-    this.Hotel = this.props.Hotel;
-
+    this.Hotel = this.props.Hotel; 
+    this.state = {
+      Age1CopmFlag : false,
+       Age2CopmFlag : false 
+    }
   }
 
-
-  handleChange = (event,index, value) => {
+  handleadultsChange = (event,index, value) => {
 
     this.props.room.adults = value
       
     if (value === 3) {
+      this.setState({
+        Age1CopmFlag : false , 
+        Age2CopmFlag : false
+      })
       this.props.room.children = 0;
-      AgeComponent = ''
       return item = _.dropRight(items1, 1)
     }
     else if (value === 4) {
+      this.setState({
+        Age1CopmFlag : false , 
+        Age2CopmFlag : false
+      })
       this.props.room.children = 0;
-      AgeComponent = ''
       return item = _.dropRight(items1, 2)
 
     }
     else {
+      this.setState({
+        Age1CopmFlag : false , 
+        Age2CopmFlag : false
+      })
       this.props.room.children = 0;
-      AgeComponent = ''
       return item = items1
     }
-
   }
   
-  handleChange2 = (event, index, value) => {
+  handlechildrenChange = (event, index, value) => {
 
   this.props.room.children = value
 
+  console.log(value)
+
+  if(value === 0) {
+    this.setState({
+      Age1CopmFlag : false , 
+      Age2CopmFlag : false
+    })
+  }
+
     if (value === 1) {
-
-     AgeComponent =  <AgeComponent1 age={this.props.room}/>
+      this.setState({
+        Age1CopmFlag : true , 
+        Age2CopmFlag : false
+      })
+      
     }
-    else if (value === 2) { 
-AgeComponent = <div> <AgeComponent1 age={this.props.room}/> <AgeComponent2 age={this.props.room}/> </div>
+    if (value === 2) { 
+      this.setState({
+        Age1CopmFlag : true , 
+        Age2CopmFlag : true
+      })
     }
-
-    else {
-      AgeComponent = null ;
-    }
+   
   }
 
   render() {
 
     return (
       <div>
-        <h4> Room {this.props.index} </h4>
+        <h4> Room {this.props.index + 1} </h4>
         <MuiThemeProvider muiTheme={getMuiTheme()}>
           <SelectField
             floatingLabelText="Adults (+12)"
             value={this.props.room.adults}
-            onChange={this.handleChange} >
+            onChange={this.handleadultsChange} >
             <MenuItem key={1} value={1} primaryText="1 Adult" />
             <MenuItem key={2} value={2} primaryText="2 Adults" />
             <MenuItem key={3} value={3} primaryText="3 Adults" />
@@ -102,53 +122,84 @@ AgeComponent = <div> <AgeComponent1 age={this.props.room}/> <AgeComponent2 age={
           <SelectField
             floatingLabelText="Children (0-11)"
             value={this.props.room.children}
-            onChange={this.handleChange2} >
+            onChange={this.handlechildrenChange} >
             {item}
           </SelectField>
         </MuiThemeProvider>
-        {AgeComponent}
+
+        {this.state.Age1CopmFlag ? ( 
+        <div>
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
+  <SelectField
+    floatingLabelText="Age of children"
+    value={this.props.room.age1} 
+    onChange={this.handleageofchildren=  (event, index, value) => { 
+      this.props.room.age1 = value 
+   }} >
+   {agearray}
+  </SelectField>
+  </MuiThemeProvider> 
+    </div> 
+         ) : null }
+
+         
+        {this.state.Age2CopmFlag ? ( 
+        <div>
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
+  <SelectField
+    floatingLabelText="Age 2 of children"
+    value={this.props.room.age2} 
+    onChange={this.handleageofchildren=  (event, index, value) => { 
+      this.props.room.age2 = value 
+   }} >
+   {agearray}
+  </SelectField>
+  </MuiThemeProvider> 
+    </div> 
+         ) : null }
+
 
       </div>
     );
   }
 }
 
-@observer 
-class  AgeComponent1 extends Component  {
-  render() {
-        return ( 
-        <div>
-  <MuiThemeProvider muiTheme={getMuiTheme()}>
-  <SelectField
-    floatingLabelText="Age of children"
-    value={this.props.age.age1} 
-    onChange={this.handleageofchildren=  (event, index, value) => { 
-      this.props.age.age1 = value 
-   }} >
-   {agearray}
-  </SelectField>
-  </MuiThemeProvider> 
-    </div> 
-         ) }
-        }
+// @observer 
+// class  AgeComponent1 extends Component  {
+//   render() {
+//         return ( 
+//         <div>
+//   <MuiThemeProvider muiTheme={getMuiTheme()}>
+//   <SelectField
+//     floatingLabelText="Age of children"
+//     value={this.props.age.age1} 
+//     onChange={this.handleageofchildren=  (event, index, value) => { 
+//       this.props.age.age1 = value 
+//    }} >
+//    {agearray}
+//   </SelectField>
+//   </MuiThemeProvider> 
+//     </div> 
+//          ) }
+//         }
 
-        @observer 
-        class  AgeComponent2 extends Component  {
-          render() {
-                return ( 
-                <div>
-          <MuiThemeProvider muiTheme={getMuiTheme()}>
-          <SelectField
-            floatingLabelText="Age of children 2"
-            value={this.props.age.age2} 
-            onChange={this.handleageofchildren=  (event, index, value) => { 
-              this.props.age.age2 = value 
-           }} >
-           {agearray}
-          </SelectField>
-          </MuiThemeProvider> 
-            </div> 
-                 ) }
-                }
+//         @observer 
+//         class  AgeComponent2 extends Component  {
+//           render() {
+//                 return ( 
+//                 <div>
+//           <MuiThemeProvider muiTheme={getMuiTheme()}>
+//           <SelectField
+//             floatingLabelText="Age of children 2"
+//             value={this.props.age.age2} 
+//             onChange={this.handleageofchildren=  (event, index, value) => { 
+//               this.props.age.age2 = value 
+//            }} >
+//            {agearray}
+//           </SelectField>
+//           </MuiThemeProvider> 
+//             </div> 
+//                  ) }
+//                 }
 
 export default RoomSelect;

@@ -22,12 +22,12 @@ class SearchComponent extends Component {
             focusedInput : '',
             selected: false,
             flag: false,
-            value: '',
+            SFvalue: '',
             dataSource: [],
             addButtonDisable : false,
             clearButtonDisable : true
 
-          }
+       }
 }
 
 handleUpdateInputAC = (value) => {
@@ -38,7 +38,7 @@ handleUpdateInputAC = (value) => {
 
 handleChangeSF = (event, index, value) => {
   
-  this.setState({value});
+  this.setState({SFvalue : value});
 
 if(value ===  1 | value === 2 ) {
 this.setState ({
@@ -98,7 +98,7 @@ if(value === 3 && this.state.flag === false){
 
       // ****** Component Mapping and passing it to RoomSelect file as a Prop
     roomcomponent = this.Hotel.request.rooms.map((room,index) =>{
-       return  <RoomSelect key={Math.random()} room={room} index={index+1}/>
+       return  <RoomSelect key={index} room={room} index={index}/>
       } )
 
 
@@ -137,7 +137,7 @@ if(value === 3 && this.state.flag === false){
               <MuiThemeProvider muiTheme={getMuiTheme()}>
               <SelectField
               floatingLabelText="Number of persons"
-              value={this.state.value}
+              value={this.state.SFvalue}
               onChange={this.handleChangeSF}  >
               <MenuItem value={1} primaryText="1 Room, 2 Adults, 0 Children" />
               <MenuItem value={2} primaryText="1 Room, 1 Adults, 0 Children" />
@@ -152,7 +152,6 @@ if(value === 3 && this.state.flag === false){
           <MuiThemeProvider muiTheme={getMuiTheme()}>
           <RaisedButton label="Search "
           icon={<ContentSearch/>} 
-    
           secondary={true} />
           </MuiThemeProvider>
           </div>
