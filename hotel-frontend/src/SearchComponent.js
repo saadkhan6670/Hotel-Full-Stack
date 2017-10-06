@@ -54,9 +54,22 @@ if(value === 3 && this.state.flag === false){
    this.Hotel.addRoom()
 }
     }
-    handelClear() {
-    }
 
+    handelClear= ()=> {
+
+      if(this.Hotel.request.rooms.length === 2) {
+    this.setState ({
+      clearButtonDisable : true
+     }) } 
+
+     if(this.Hotel.request.rooms.length === 4) {
+      this.setState ({
+        addButtonDisable : false
+       }) }
+       console.log(this.Hotel.request.rooms.length)
+      this.Hotel.request.rooms.pop()
+    }
+    
   render() {
     // ********** ClearButton Component
     let ClearButton = (
@@ -87,7 +100,9 @@ if(value === 3 && this.state.flag === false){
       this.setState ({
         addButtonDisable : true
        })
+       console.log(this.Hotel.request.rooms.length)
        this.Hotel.addRoom() } } 
+
       disabled = {this.state.addButtonDisable} >
       <ContentAdd />
       </FloatingActionButton>
