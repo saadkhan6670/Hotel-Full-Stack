@@ -31,15 +31,16 @@ class RoomData {
      let url =  URL + data
         
             if(data.length >= 3) {
-              axios.get(url)
-                .then( (response) => {
+              return  axios.get(url);
+             
+              //   .then( (response) => {
                
              
-                retrievedSearchTerms = response.data.map(function(result) {
-                  return result.name;
-                });
+              //   retrievedSearchTerms = response.data.map(function(result) {
+              //     return result.name;
+              //   });
 
-               return this.request.dataSource = retrievedSearchTerms
+              //  return this.request.dataSource = retrievedSearchTerms
       
             })
           }
