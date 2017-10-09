@@ -17,7 +17,7 @@ class MatchedHotels extends Component {
 
     render() {
         return (<div>
-            {console.log (this.Hotel.onClickSearch)}
+
 
                     <h1> Matching Hotels </h1>
 
