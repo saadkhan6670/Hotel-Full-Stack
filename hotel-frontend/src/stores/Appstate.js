@@ -31,20 +31,24 @@ class RoomData {
      let url =  URL + data
         
             if(data.length >= 3) {
-              return  axios.get(url);
+              return  axios.get(url)
              
-              //   .then( (response) => {
+                .then( (response) => {
                
              
-              //   retrievedSearchTerms = response.data.map(function(result) {
-              //     return result.name;
-              //   });
+                retrievedSearchTerms = response.data.map(function(result) {
+                  return result.name;
+                });
 
-              //  return this.request.dataSource = retrievedSearchTerms
+               return this.request.dataSource = retrievedSearchTerms
       
             })
           }
       }
+
+      @action onClickSearch() {
+        return axios.get("http://localhost:5000/hotel/hotels")
+              }
  }
 const store = new RoomData() ;
 

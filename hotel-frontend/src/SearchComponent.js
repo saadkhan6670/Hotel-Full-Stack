@@ -9,6 +9,8 @@ import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { inject, observer } from 'mobx-react';
+import { Link} from 'react-router-dom'
+import axios from 'axios';
 
 let content, roomcomponent
 
@@ -69,7 +71,12 @@ if(value === 3 && this.state.flag === false){
        console.log(this.Hotel.request.rooms.length)
       this.Hotel.request.rooms.pop()
     }
-    
+
+    onClickSearch(){
+       this.Hotel.onClickSearch()
+    }
+
+    // ******* RENDER
   render() {
     // ********** ClearButton Component
     let ClearButton = (
@@ -162,13 +169,15 @@ if(value === 3 && this.state.flag === false){
                 {content}
            
             <div> 
-              
-              {/* Search button */}
+               {/* Search button */}
+          <Link to="/MatchedHotels">
           <MuiThemeProvider muiTheme={getMuiTheme()}>
           <RaisedButton label="Search "
+          onClick={this.onClickSearch}
           icon={<ContentSearch/>} 
           secondary={true} />
           </MuiThemeProvider>
+          </Link>
           </div>
   </div>
     )
