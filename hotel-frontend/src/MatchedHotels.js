@@ -9,9 +9,25 @@ class MatchedHotels extends Component {
         super(props);
         this.Hotel = this.props.Hotel;
         this.state = {
+            Hotels_data : []
 
-        }
+        };
     }
+
+    componentWillMount() {
+        axios.get("http://localhost:5000/hotel/hotels")
+        .then( (response) => { 
+         
+            const data = response.data.map(obj => {return obj});
+         this.setState({
+             Hotels_data : data
+         })
+         
+        })
+        
+         
+    }
+
 
 
 
@@ -20,6 +36,8 @@ class MatchedHotels extends Component {
 
 
                     <h1> Matching Hotels </h1>
+        {console.log(this.state.Hotels_data)}
+        
 
         </div>
         )

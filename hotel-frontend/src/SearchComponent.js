@@ -73,7 +73,7 @@ if(value === 3 && this.state.flag === false){
     }
 
     onClickSearch(){
-       this.Hotel.onClickSearch()
+     
     }
 
     // ******* RENDER
