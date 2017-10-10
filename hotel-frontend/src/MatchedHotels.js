@@ -5,9 +5,6 @@ import './style.css'
 import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 import Pagination from "react-js-pagination"
-require("bootstrap/less/bootstrap.less");
-
-
 
 @inject('Hotel')
 @observer
