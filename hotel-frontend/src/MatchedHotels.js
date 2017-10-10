@@ -90,5 +90,6 @@ handlePageChange = (pageNumber) =>  {
     }
 }
 
+//https://github.com/AdeleD/react-paginate/blob/master/demo/js/demo.js 
 
 export default MatchedHotels;
