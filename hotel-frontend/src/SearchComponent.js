@@ -9,8 +9,7 @@ import MuiThemeProvider   from 'material-ui/styles/MuiThemeProvider';
 import { DateRangePicker } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { inject, observer } from 'mobx-react';
-import { Link} from 'react-router-dom'
-import axios from 'axios';
+import { Link} from 'react-router-dom';
 
 let content, roomcomponent
 

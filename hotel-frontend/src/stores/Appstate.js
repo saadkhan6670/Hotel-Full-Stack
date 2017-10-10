@@ -34,8 +34,6 @@ class RoomData {
               return  axios.get(url)
              
                 .then( (response) => {
-               
-             
                 retrievedSearchTerms = response.data.map(function(result) {
                   return result.name;
                 });
