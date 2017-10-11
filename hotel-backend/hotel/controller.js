@@ -20,4 +20,5 @@ exports.SearchAll = function (req, res) {
 exports.MatchingHotels = function (req, res) {
        
                 res.send(Hotel_Data.hotel);
+                console.log("from sevre")
     };

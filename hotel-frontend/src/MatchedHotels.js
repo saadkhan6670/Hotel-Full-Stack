@@ -33,7 +33,7 @@ handlePageChange = (pageNumber) =>  {
 
 
     render() {
-         // Logic for displaying current todos
+         // Logic for displaying current hotels
          const indexOfLastHotel = this.state.activePage * this.state.itemsCountPerPage;
          const indexOfFirstHotel = indexOfLastHotel - this.state.itemsCountPerPage;
          const currentHotels = this.state.Hotels_data.slice(indexOfFirstHotel, indexOfLastHotel);
@@ -95,17 +95,5 @@ handlePageChange = (pageNumber) =>  {
         )
     }
 };
-
-
-export class HotelData extends Component {
-    render() {
-        return (<div>
-    
-    </div> )}
-};
-
-
-//https://github.com/AdeleD/react-paginate/blob/master/demo/js/demo.js 
-//https://codepen.io/PiotrBerebecki/pen/pEYPbY?editors=0010
 
 export default MatchedHotels;
