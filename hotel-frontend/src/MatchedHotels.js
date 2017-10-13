@@ -31,6 +31,12 @@ handlePageChange = (pageNumber) =>  {
     this.setState({activePage: pageNumber});
   }
 
+  onSearchClick = (e) => {
+        this.state.Hotels_data.filter(data => {
+            return data.summary.hotelName.indexOf(e) >= 0
+        })
+  }
+
 
     render() {
          // Logic for displaying current todos
@@ -40,6 +46,7 @@ handlePageChange = (pageNumber) =>  {
 
         return (<div>
 
+        {/* Pagination */}
         <Pagination
         firstPageText={<i className='glyphicon glyphicon-chevron-left'/>}
         lastPageText={<i className='glyphicon glyphicon-chevron-right'/>}
@@ -52,9 +59,24 @@ handlePageChange = (pageNumber) =>  {
           onChange={this.handlePageChange}
         />
 
+        <h1> Apply Filters To the Search </h1>
+
+        <form className="navbar-form" role="search">
+        <div className="form-group input-group">
+          <input type="text" className="form-control" name="serchfield" placeholder="Search.." ref="searchInput"/>
+          <span className="input-group-btn">
+            <button className="btn btn-default" type="button" onClick={this.onSearchClick}>
+              <span className="glyphicon glyphicon-search"></span>
+            </button>
+          </span>        
+        </div>
+      </form>
+      
+
+            {/* Data Show Div */}
         { currentHotels.map(data => {
         return (
-<div className="container">
+<div key={data.hotelId} className="container">
  <div className="row">
      <div className="col-md-12">
          <div className="col-sm-6 col-md-6">
@@ -95,17 +117,5 @@ handlePageChange = (pageNumber) =>  {
         )
     }
 };
-
-
-export class HotelData extends Component {
-    render() {
-        return (<div>
-    
-    </div> )}
-};
-
-
-//https://github.com/AdeleD/react-paginate/blob/master/demo/js/demo.js 
-//https://codepen.io/PiotrBerebecki/pen/pEYPbY?editors=0010
 
 export default MatchedHotels;
