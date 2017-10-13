@@ -39,7 +39,7 @@ handlePageChange = (pageNumber) =>  {
 
 
     render() {
-         // Logic for displaying current todos
+         // Logic for displaying current hotels
          const indexOfLastHotel = this.state.activePage * this.state.itemsCountPerPage;
          const indexOfFirstHotel = indexOfLastHotel - this.state.itemsCountPerPage;
          const currentHotels = this.state.Hotels_data.slice(indexOfFirstHotel, indexOfLastHotel);
