@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var Hotels = mongoose.model('Hotels');
 var boom = require('boom');
 var Hotel_Data = require('../Hotel_Data')
+var Filters = require('../resources')
+
 
 exports.SearchAll = function (req, res) {
 
@@ -20,5 +22,9 @@ exports.SearchAll = function (req, res) {
 exports.MatchingHotels = function (req, res) {
        
                 res.send(Hotel_Data.hotel);
-                console.log("from sevre")
     };
+
+exports.HotelFilters = function (req, res) {
+
+    res.send(Filters);
+}; 

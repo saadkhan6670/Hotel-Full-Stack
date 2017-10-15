@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { inject, observer } from 'mobx-react';
 import axios from 'axios';
 import './style.css'
 import Rater from 'react-rater'
 import 'react-rater/lib/react-rater.css'
 import Pagination from "react-js-pagination"
+var ReactDualRangeSlider = require('react-dual-range-slider');
 
-@inject('Hotel')
-@observer
+
+
 class MatchedHotels extends Component {
     constructor(props) {
         super(props);
-        this.Hotel = this.props.Hotel;
+       
         this.state = {
             Hotels_data : [],
             activePage: 1,
@@ -20,7 +20,7 @@ class MatchedHotels extends Component {
     }
 
     componentDidMount() {
-        axios.get("http://localhost:5000/hotel/hotels")
+        axios.get("http://localhost:5000/hotel/matched-hotels")
         .then( (response) => {
          this.setState({ Hotels_data : response.data })
     })
@@ -61,17 +61,7 @@ handlePageChange = (pageNumber) =>  {
 
         <h1> Apply Filters To the Search </h1>
 
-        <form className="navbar-form" role="search">
-        <div className="form-group input-group">
-          <input type="text" className="form-control" name="serchfield" placeholder="Search.." ref="searchInput"/>
-          <span className="input-group-btn">
-            <button className="btn btn-default" type="button" onClick={this.onSearchClick}>
-              <span className="glyphicon glyphicon-search"></span>
-            </button>
-          </span>        
-        </div>
-      </form>
-      
+            <FilterComponent/>
 
             {/* Data Show Div */}
         { currentHotels.map(data => {
@@ -115,6 +105,32 @@ handlePageChange = (pageNumber) =>  {
       
         </div>
         )
+    }
+};
+
+class FilterComponent extends Component {
+
+    render() {
+    
+       return (<div>
+           <hr/>
+
+<form className="navbar-form" role="search">
+    <h4> Hotel Name </h4>
+<div className="form-group input-group">
+  <input type="text" className="form-control" name="serchfield" placeholder="Search hotel name..." ref="searchInput"/>
+  <span className="input-group-btn">
+    <button className="btn btn-primary" type="button" onClick={this.onSearchClick}>
+      <span className="glyphicon glyphicon-search"></span>
+    </button>
+  </span>        
+</div>
+</form>
+<hr/> 
+<ReactDualRangeSlider />
+
+    <hr/>
+</div>)
     }
 };
 
