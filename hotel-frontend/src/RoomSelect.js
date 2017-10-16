@@ -164,42 +164,4 @@ class RoomSelect extends Component {
   }
 }
 
-// @observer 
-// class  AgeComponent1 extends Component  {
-//   render() {
-//         return ( 
-//         <div>
-//   <MuiThemeProvider muiTheme={getMuiTheme()}>
-//   <SelectField
-//     floatingLabelText="Age of children"
-//     value={this.props.age.age1} 
-//     onChange={this.handleageofchildren=  (event, index, value) => { 
-//       this.props.age.age1 = value 
-//    }} >
-//    {agearray}
-//   </SelectField>
-//   </MuiThemeProvider> 
-//     </div> 
-//          ) }
-//         }
-
-//         @observer 
-//         class  AgeComponent2 extends Component  {
-//           render() {
-//                 return ( 
-//                 <div>
-//           <MuiThemeProvider muiTheme={getMuiTheme()}>
-//           <SelectField
-//             floatingLabelText="Age of children 2"
-//             value={this.props.age.age2} 
-//             onChange={this.handleageofchildren=  (event, index, value) => { 
-//               this.props.age.age2 = value 
-//            }} >
-//            {agearray}
-//           </SelectField>
-//           </MuiThemeProvider> 
-//             </div> 
-//                  ) }
-//                 }
-
 export default RoomSelect;
