@@ -159,24 +159,6 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
     // starRating handel event
     handleStarCheck(code,key) {
 
-        OnlyClick = (value) =>  {
-            
-            this.setState({
-                filterStar: _.forEach(this.state.filterStar, d => {
-                    d.selected = false;
-                    if(d.code === value.code) 
-                    {
-                       d.selected = true}
-    
-                       if(d.selected === false)
-                       {
-                        this.Hotels.ratingInput.push(d.code);
-                        } 
-                })
-            })
-    
-        }
-
     
         var a =   this.state.filterStar
         a[key].selected = !a[key].selected
@@ -226,7 +208,23 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
         })
     }
 
-   
+    OnlyClick(value) {
+        
+        this.setState({
+            filterStar: _.forEach(this.state.filterStar, d => {
+                d.selected = false;
+                if(d.code === value.code) 
+                {
+                   d.selected = true}
+
+                   if(d.selected === false)
+                   {
+                    this.Hotels.ratingInput.push(d.code);
+                    } 
+            })
+        })
+
+    }
 
 
     render() {
