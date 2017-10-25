@@ -64,10 +64,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                     values: [response.data[2].value.from,response.data[2].value.to],
                     min: response.data[2].value.min,
                     max: response.data[2].value.max
-                    
-
                 })
-
             }).catch((error) => {
                 console.log(error)
             })  
@@ -97,10 +94,6 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                     this.Hotels.PriceInput.push(d)
         })
     }
-
-
-
-
 
     // District handel event
     handleDistCheck(code,key){

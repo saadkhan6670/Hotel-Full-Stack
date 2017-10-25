@@ -1,4 +1,4 @@
-import { observable, action, computed } from 'mobx';
+import { observable, computed } from 'mobx';
 
 import _ from 'lodash';
 
@@ -17,6 +17,8 @@ class Hotels {
     
     @computed get SearchFilter() {
 
+       
+
 
         return _.filter(this.filteredData, (data) => {
 
@@ -25,17 +27,12 @@ class Hotels {
 
 
                 //Price Filter
-                _.inRange(this.PriceInput ,(c) => {
-                    console.log(c)
-                    data.summary.lowRate === c
+                data.summary.lowRate >= this.PriceInput[0] && data.summary.lowRate <= this.PriceInput[1] &&
 
-                }) &&
             
                 //StarRating Filter
                 this.ratingInput.every((c) => {
-                    return _.some((data.rating), d => {
-                        console.log(c)
-                       
+                    return _.some((data.rating), d => {   
                         return d.value !== c;
                     })
                 }) &&
