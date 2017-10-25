@@ -6,7 +6,6 @@ import Pagination from 'react-js-pagination';
 import './style.css'
 import _ from 'lodash';
 import Rheostat from 'rheostat';
-import 'react-rangeslider/lib/index.css'
 import { inject, observer } from 'mobx-react';
 
 require("bootstrap/less/bootstrap.less");
@@ -25,17 +24,17 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
             itemsCountPerPage: 40,
             resources: [],
             hotel_data: [],
-            min: 1,
-            max: 100,
+            values: [],
             filterStar : [],
             filterDist : [],
             filterChain : [],
             filterPA: [],
             filterRA : [],
+            min: 0,
+            max: 0
 
         };
     }
-
 
      componentDidMount() {
          axios.get("http://localhost:5000/hotel/matched-hotels")
@@ -45,6 +44,8 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                     hotel_data: response.data
                 })
                 this.Hotels.filteredData = _.clone(this.state.hotel_data)
+
+               
 
             }).catch((error) => {
                 console.log(error)
@@ -59,7 +60,12 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                     filterDist : response.data[1].value,
                     filterChain : response.data[0].value,
                     filterPA : response.data[6].value,
-                    filterRA : response.data[5].value
+                    filterRA : response.data[5].value,
+                    values: [response.data[2].value.from,response.data[2].value.to],
+                    min: response.data[2].value.min,
+                    max: response.data[2].value.max
+                    
+
                 })
 
             }).catch((error) => {
@@ -70,13 +76,31 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
     handlePageChange = (pageNumber) => {
 
         this.setState({ activePage: pageNumber });
-
     }
-
-
+  
+        //Search Input handler
     handleSearchClick(input) {
+
      this.Hotels.searchInput = this.refs.searchInput.value
     }
+
+    //Price ranger handler
+    updatePriceRanger(sliderState) {
+        
+        _.remove(this.Hotels.PriceInput)
+        
+        this.setState({
+          values: sliderState.values,
+        }); 
+      
+        _.forEach(sliderState.values, (d) => {
+                    this.Hotels.PriceInput.push(d)
+        })
+    }
+
+
+
+
 
     // District handel event
     handleDistCheck(code,key){
@@ -190,28 +214,10 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
         }
     }
 
-    handleDragStart() {
+    OnlyClick(value , filter, Input) {
+           _.remove(Input)        
         this.setState({
-            min: this.state.min + 1
-        })
-    }
-
-    handleDragEnd() {
-        this.setState({
-            min: this.state.min + 1
-        })
-    }
-
-    handleSliderDragMove() {
-        this.setState({
-            min: this.state.min + 1
-        })
-    }
-
-    OnlyClick(value) {
-        
-        this.setState({
-            filterStar: _.forEach(this.state.filterStar, d => {
+            filter: _.forEach(filter, d => {
                 d.selected = false;
                 if(d.code === value.code) 
                 {
@@ -219,7 +225,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
 
                    if(d.selected === false)
                    {
-                    this.Hotels.ratingInput.push(d.code);
+                    Input.push(d.code);
                     } 
             })
         })
@@ -229,6 +235,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
 
     render() {
 
+      
         indexOfLastHotel = this.state.activePage * this.state.itemsCountPerPage;
         indexOfFirstHotel = indexOfLastHotel - this.state.itemsCountPerPage;
 
@@ -236,7 +243,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
 
         return (
             <div>
-
+           
                 <div className="container">
                     <h2>Select Hotel</h2>
 
@@ -259,20 +266,17 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                             </div>
                             <div id="Price" ref="price">
 
-
                                 <div>
                                     <Rheostat
-                                        min={this.state.min}
-                                        max={this.state.max}
-                                        values={[1, 100]}
-                                        onSliderDragStart={() => this.handleDragStart()}
-                                        onSliderDragEnd={() => this.handleDragEnd()}
-                                        onSliderDragMove={() => this.handleSliderDragMove()}
-                                        snap
+                                    min={this.state.min}
+                                    max= {this.state.max}
+                                    onValuesUpdated={(sliderState) => this.updatePriceRanger(sliderState)}
+                
+                                        values={this.state.values}
 
                                     />
 
-                                    <span>{this.state.min}</span> <span>{this.state.max}</span>
+                                    <span>{this.state.values[0]}</span> <span>{this.state.values[1]}</span>
                                 </div>
 
 
@@ -297,7 +301,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                                                             <Rater total={5} rating={v.code} interactive={false} />
 
                                                         </label>
-                                                        <a onClick={() => this.OnlyClick(v)}> only </a>
+                                                        <a onClick={() => this.OnlyClick(v, this.state.filterStar,this.Hotels.ratingInput)}> only </a>
                                                     </div>)
                                             })}
                                 
@@ -321,7 +325,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                                                             <p>{v.label}</p>
 
                                                         </label>
-                                                        <a> only </a>
+                                                        <a onClick={() => this.OnlyClick(v, this.state.filterDist,this.Hotels.districtInput)}> only </a>
                                                     </div>)
                                             })}
                                         
@@ -343,7 +347,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                                                         <label>
                                                             <p>{v.label}</p>
                                                         </label>
-                                                        <a> only </a>
+                                                        <a onClick={() => this.OnlyClick(v, this.state.filterChain,this.Hotels.ChainInput)}> only </a>
                                                     </div>)
                                             })}
                                         
@@ -366,7 +370,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                                                         <label>
                                                             <p>{v.label}</p>
                                                         </label>
-                                                        <a> only </a>
+                                                        <a onClick={() => this.OnlyClick(v, this.state.filterPA,this.Hotels.PAInput)}> only </a>
                                                     </div>)
                                             })}
                                        
@@ -389,7 +393,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                                                         <label>
                                                             <p>{v.label}</p>
                                                         </label>
-                                                        <a> only </a>
+                                                        <a onClick={() => this.OnlyClick(v, this.state.filterRA,this.Hotels.RAInput)}> only </a>
                                                     </div>)
                                             })}
                                         

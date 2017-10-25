@@ -1,6 +1,6 @@
 {
     "request": {
-        "uuid": "28b54212-fc35-41f1-9b49-da961f51a73e"
+        "uuid": "fbcecaf6-a08a-47e0-87e0-b2c4d2a98b60"
     },
     "filters": [
         {
@@ -217,11 +217,6 @@
                     "selected": true
                 },
                 {
-                    "label": "Imperial",
-                    "code": 429,
-                    "selected": true
-                },
-                {
                     "label": "Khamas Hospitality",
                     "code": 335,
                     "selected": true
@@ -389,6 +384,16 @@
                 {
                     "label": "Donatello hotels & resorts",
                     "code": 859,
+                    "selected": true
+                },
+                {
+                    "label": "Orchid Hotel",
+                    "code": 931,
+                    "selected": true
+                },
+                {
+                    "label": "Ramada",
+                    "code": 533,
                     "selected": true
                 },
                 {
@@ -567,6 +572,16 @@
                     "selected": true
                 },
                 {
+                    "label": "Imperial",
+                    "code": 429,
+                    "selected": true
+                },
+                {
+                    "label": "Marriott Hotels",
+                    "code": 86,
+                    "selected": true
+                },
+                {
                     "label": "Somewhere Hotels",
                     "code": 317,
                     "selected": true
@@ -684,16 +699,6 @@
                 {
                     "label": "Signature Hotels",
                     "code": 406,
-                    "selected": true
-                },
-                {
-                    "label": "Ramada",
-                    "code": 533,
-                    "selected": true
-                },
-                {
-                    "label": "Orchid Hotel",
-                    "code": 931,
                     "selected": true
                 }
             ]
@@ -834,6 +839,11 @@
                 {
                     "label": "Jumeira 1",
                     "code": 65696,
+                    "selected": true
+                },
+                {
+                    "label": "Trade Centre",
+                    "code": 67040,
                     "selected": true
                 },
                 {
@@ -1077,8 +1087,8 @@
                     "selected": true
                 },
                 {
-                    "label": "Al Baraha",
-                    "code": 65723,
+                    "label": "Near Wafi City Mall",
+                    "code": 1456,
                     "selected": true
                 },
                 {
@@ -1094,6 +1104,11 @@
                 {
                     "label": "Riggat Al Buteen",
                     "code": 65726,
+                    "selected": true
+                },
+                {
+                    "label": "Al Baraha",
+                    "code": 65723,
                     "selected": true
                 },
                 {
@@ -1155,11 +1170,6 @@
                     "label": "In The City Center",
                     "code": 10,
                     "selected": true
-                },
-                {
-                    "label": "Trade Centre",
-                    "code": 67040,
-                    "selected": true
                 }
             ]
         },
@@ -1169,10 +1179,10 @@
                 "code": "price",
                 "label": "price",
                 "step": 50,
-                "from": 112.87,
-                "min": 112.87,
-                "to": 20626.84,
-                "max": 20626.84
+                "from": 105.6,
+                "min": 105.6,
+                "to": 7398.68,
+                "max": 7398.68
             }
         },
         {
@@ -1180,31 +1190,31 @@
             "value": [
                 {
                     "code": "5",
-                    "count": 139,
+                    "count": 144,
                     "selected": true,
                     "label": "5 Stars"
                 },
                 {
                     "code": "4",
-                    "count": 213,
+                    "count": 214,
                     "selected": true,
                     "label": "4 Stars"
                 },
                 {
                     "code": "3",
-                    "count": 120,
+                    "count": 122,
                     "selected": true,
                     "label": "3 Stars"
                 },
                 {
                     "code": "2",
-                    "count": 39,
+                    "count": 42,
                     "selected": true,
                     "label": "2 Stars"
                 },
                 {
                     "code": "1",
-                    "count": 14,
+                    "count": 13,
                     "selected": true,
                     "label": "1 Star"
                 },
@@ -1227,7 +1237,7 @@
                 },
                 {
                     "code": 0,
-                    "count": 531,
+                    "count": 541,
                     "selected": true,
                     "label": "https:\/\/carsolizeprod.blob.core.windows.net\/images\/TrustYou\/0.png"
                 }
@@ -1877,11 +1887,6 @@
                     "selected": true
                 },
                 {
-                    "code": 2396,
-                    "label": "Water",
-                    "selected": true
-                },
-                {
                     "code": 10056,
                     "label": "Rooftop Terrace",
                     "selected": true
@@ -1904,6 +1909,11 @@
                 {
                     "code": 2286,
                     "label": "Pillow menu",
+                    "selected": true
+                },
+                {
+                    "code": 2227,
+                    "label": "Launderette",
                     "selected": true
                 },
                 {
@@ -1952,16 +1962,6 @@
                     "selected": true
                 },
                 {
-                    "code": 2390,
-                    "label": "VIP rooms",
-                    "selected": true
-                },
-                {
-                    "code": 2383,
-                    "label": "TV",
-                    "selected": true
-                },
-                {
                     "code": 2325,
                     "label": "Single rooms",
                     "selected": true
@@ -1969,6 +1969,11 @@
                 {
                     "code": 2277,
                     "label": "Parasols",
+                    "selected": true
+                },
+                {
+                    "code": 2251,
+                    "label": "Mobile phone network",
                     "selected": true
                 },
                 {
@@ -2012,6 +2017,16 @@
                     "selected": true
                 },
                 {
+                    "code": 10100,
+                    "label": "Front Desk (limited hours)",
+                    "selected": true
+                },
+                {
+                    "code": 2122,
+                    "label": "Cloakroom",
+                    "selected": true
+                },
+                {
                     "code": 2148,
                     "label": "Doctor on call 24 hrs",
                     "selected": true
@@ -2052,6 +2067,11 @@
                     "selected": true
                 },
                 {
+                    "code": 2347,
+                    "label": "Supermarket",
+                    "selected": true
+                },
+                {
                     "code": 2336,
                     "label": "Solarium",
                     "selected": true
@@ -2077,33 +2097,8 @@
                     "selected": true
                 },
                 {
-                    "code": 2347,
-                    "label": "Supermarket",
-                    "selected": true
-                },
-                {
-                    "code": 2251,
-                    "label": "Mobile phone network",
-                    "selected": true
-                },
-                {
                     "code": 2242,
                     "label": "Medical service",
-                    "selected": true
-                },
-                {
-                    "code": 2227,
-                    "label": "Launderette",
-                    "selected": true
-                },
-                {
-                    "code": 10100,
-                    "label": "Front Desk (limited hours)",
-                    "selected": true
-                },
-                {
-                    "code": 2122,
-                    "label": "Cloakroom",
                     "selected": true
                 },
                 {
@@ -2124,11 +2119,6 @@
                 {
                     "code": 2269,
                     "label": "Number of floors - under 10",
-                    "selected": true
-                },
-                {
-                    "code": 2179,
-                    "label": "Car parking",
                     "selected": true
                 },
                 {
@@ -2154,6 +2144,11 @@
                 {
                     "code": 2047,
                     "label": "Bidet",
+                    "selected": true
+                },
+                {
+                    "code": 2390,
+                    "label": "VIP rooms",
                     "selected": true
                 },
                 {
@@ -2214,6 +2209,21 @@
                 {
                     "code": 2196,
                     "label": "Gymnasium",
+                    "selected": true
+                },
+                {
+                    "code": 2396,
+                    "label": "Water",
+                    "selected": true
+                },
+                {
+                    "code": 2383,
+                    "label": "TV",
+                    "selected": true
+                },
+                {
+                    "code": 2179,
+                    "label": "Car parking",
                     "selected": true
                 },
                 {
