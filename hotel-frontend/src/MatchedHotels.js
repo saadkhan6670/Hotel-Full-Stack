@@ -65,6 +65,8 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                     min: response.data[2].value.min,
                     max: response.data[2].value.max
                 })
+
+                this.Hotels.PriceInput =[ this.state.min , this.state.max]
             }).catch((error) => {
                 console.log(error)
             })  
@@ -223,6 +225,10 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
             })
         })
 
+    }
+
+    OnPriceSort(){
+        console.log("From here")
     }
 
 
@@ -392,14 +398,19 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                                         
                             </div>
                         </div>
-                        <span className="properties"> {this.Hotels.SearchFilter.length} properties found </span>
-                        <div className="col-md-9">
                      
-                              
+                        <div className="col-md-9">
+                        <ul className="nav nav-pills">
+                                <li className="active"><a>Popular</a></li>
+                                <li onClick={() => this.OnPriceSort()}><a >Price</a></li>
+                                <li><a >Distance</a></li>
+                                <li><a >Name</a></li>
+                                <li><a >Rating</a></li>
+                                <span className="properties"> {this.Hotels.SearchFilter.length} properties found </span>
+                            </ul>
 
                             {currentHotels.map((data, key) => {
                                 return (
-
 
                                     <div className="col-sm-6 col-md-6" key={key}>
                                         <div className="thumbnail" >
