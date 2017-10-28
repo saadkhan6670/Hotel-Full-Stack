@@ -11,13 +11,14 @@ import { inject, observer } from 'mobx-react';
 require("bootstrap/less/bootstrap.less");
 
 let currentHotels, indexOfLastHotel, indexOfFirstHotel;
+let SortingOrder = "asc"
 
 @inject('Hotels')
 @observer class MatchedHotels extends Component {
 
     constructor(props) {
         super(props);
-        this.Hotels = this.props.Hotels; 
+        this.Hotels = this.props.Hotels;
 
         this.state = {
             activePage: 1,
@@ -25,19 +26,19 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
             resources: [],
             hotel_data: [],
             values: [],
-            filterStar : [],
-            filterDist : [],
-            filterChain : [],
+            filterStar: [],
+            filterDist: [],
+            filterChain: [],
             filterPA: [],
-            filterRA : [],
+            filterRA: [],
             min: 0,
             max: 0
 
         };
     }
 
-     componentDidMount() {
-         axios.get("http://localhost:5000/hotel/matched-hotels")
+    componentDidMount() {
+        axios.get("http://localhost:5000/hotel/matched-hotels")
             .then((response) => {
 
                 this.setState({
@@ -45,7 +46,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                 })
                 this.Hotels.filteredData = _.clone(this.state.hotel_data)
 
-               
+
 
             }).catch((error) => {
                 console.log(error)
@@ -56,150 +57,150 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
 
                 this.setState({
                     resources: response.data,
-                    filterStar : response.data[3].value,
-                    filterDist : response.data[1].value,
-                    filterChain : response.data[0].value,
-                    filterPA : response.data[6].value,
-                    filterRA : response.data[5].value,
-                    values: [response.data[2].value.from,response.data[2].value.to],
+                    filterStar: response.data[3].value,
+                    filterDist: response.data[1].value,
+                    filterChain: response.data[0].value,
+                    filterPA: response.data[6].value,
+                    filterRA: response.data[5].value,
+                    values: [response.data[2].value.from, response.data[2].value.to],
                     min: response.data[2].value.min,
                     max: response.data[2].value.max
                 })
 
-                this.Hotels.PriceInput =[ this.state.min , this.state.max]
+                this.Hotels.PriceInput = [this.state.min, this.state.max]
             }).catch((error) => {
                 console.log(error)
-            })  
+            })
     }
 
     handlePageChange = (pageNumber) => {
 
         this.setState({ activePage: pageNumber });
     }
-  
-        //Search Input handler
+
+    //Search Input handler
     handleSearchClick(input) {
 
-     this.Hotels.searchInput = this.refs.searchInput.value
+        this.Hotels.searchInput = this.refs.searchInput.value
     }
 
     //Price ranger handler
     updatePriceRanger(sliderState) {
-        
+
         _.remove(this.Hotels.PriceInput)
-        
+
         this.setState({
-          values: sliderState.values,
-        }); 
-      
+            values: sliderState.values,
+        });
+
         _.forEach(sliderState.values, (d) => {
-                    this.Hotels.PriceInput.push(d)
+            this.Hotels.PriceInput.push(d)
         })
     }
 
     // District handel event
-    handleDistCheck(code,key){
+    handleDistCheck(code, key) {
 
-        var a =   this.state.filterDist
+        var a = this.state.filterDist
         a[key].selected = !a[key].selected
 
         this.setState({
-            filterDist : a
+            filterDist: a
         })
 
-        if(a[key].selected){
-            _.pull(this.Hotels.districtInput, code); 
+        if (a[key].selected) {
+            _.pull(this.Hotels.districtInput, code);
         }
 
-        else{
+        else {
             this.Hotels.districtInput.push(code);
-            }
-         
+        }
+
     }
 
     // Chain handel event
-    handleChainCheck(code,key){
+    handleChainCheck(code, key) {
 
-        var a =   this.state.filterChain
+        var a = this.state.filterChain
         a[key].selected = !a[key].selected
 
         this.setState({
-            filterChain : a
+            filterChain: a
         })
 
-        if(a[key].selected){
-            _.pull(this.Hotels.ChainInput, code); 
+        if (a[key].selected) {
+            _.pull(this.Hotels.ChainInput, code);
         }
 
-        else{
+        else {
             this.Hotels.ChainInput.push(code);
-            }
-         
-    } 
+        }
+
+    }
 
     // Prop Amnities handel event
-    handlePACheck(code,key){
-        var a =   this.state.filterPA
+    handlePACheck(code, key) {
+        var a = this.state.filterPA
         a[key].selected = !a[key].selected
 
         this.setState({
-            filterPA : a
+            filterPA: a
         })
 
-        if(a[key].selected){
-            _.pull(this.Hotels.PAInput, code); 
+        if (a[key].selected) {
+            _.pull(this.Hotels.PAInput, code);
         }
 
-        else{
+        else {
             this.Hotels.PAInput.push(code);
-            }
-         
+        }
+
     }
 
     // Room Amnities handel event
-    handleRACheck(code,key){
-        var a =   this.state.filterRA
+    handleRACheck(code, key) {
+        var a = this.state.filterRA
         a[key].selected = !a[key].selected
 
         this.setState({
-            filterRA : a
+            filterRA: a
         })
 
-        if(a[key].selected){
-            _.pull(this.Hotels.RAInput, code); 
+        if (a[key].selected) {
+            _.pull(this.Hotels.RAInput, code);
         }
 
-        else{
+        else {
             this.Hotels.RAInput.push(code);
-            }
-         
-    }
-   
-    // starRating handel event
-    handleStarCheck(code,key) {
+        }
 
-    
-        var a =   this.state.filterStar
+    }
+
+    // starRating handel event
+    handleStarCheck(code, key) {
+
+
+        var a = this.state.filterStar
         a[key].selected = !a[key].selected
 
         this.setState({
-            filterStar : a
+            filterStar: a
         })
 
-       
-        if(a[key].selected){
-        _.pull(this.Hotels.ratingInput, code )
-    }
-       
-        else{
-        this.Hotels.ratingInput.push(code);
+
+        if (a[key].selected) {
+            _.pull(this.Hotels.ratingInput, code)
+        }
+
+        else {
+            this.Hotels.ratingInput.push(code);
         }
     }
 
-    
+
     handleDivHide(e) {
 
-        var x = document.getElementById(e) ;
+        var x = document.getElementById(e);
 
         if (x.style.display === "none") {
             x.style.display = "block";
@@ -209,40 +210,92 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
         }
     }
 
-    OnlyClick(value , filter, Input) {
-           _.remove(Input)        
+    OnlyClick(value, filter, Input) {
+        _.remove(Input)
         this.setState({
             filter: _.forEach(filter, d => {
                 d.selected = false;
-                if(d.code === value.code) 
-                {
-                   d.selected = true}
+                if (d.code === value.code) {
+                    d.selected = true
+                }
 
-                   if(d.selected === false)
-                   {
+                if (d.selected === false) {
                     Input.push(d.code);
-                    } 
+                }
             })
         })
 
     }
 
-    OnPriceSort(){
-        console.log("From here")
+    OnSortPrice(KeyWord) {
+        this.Hotels.Sort = KeyWord
+     
+        if (SortingOrder === "asc") {
+            SortingOrder = "desc"
+            return console.log("from asc")
+        }
+        if (SortingOrder === "desc") {
+            SortingOrder = "asc"
+            return console.log("from desc")
+        }
     }
+
+    OnSortDistance(KeyWord) {
+        this.Hotels.Sort = KeyWord
+        
+
+        if (SortingOrder === "asc") {
+        
+            SortingOrder = "desc"
+            return console.log("from asc")
+        }
+        if (SortingOrder === "desc") {
+            SortingOrder = "asc"
+            return console.log("from desc")
+        }
+    }
+
+    OnSortName(KeyWord) {
+        this.Hotels.Sort = KeyWord
+     
+
+        if (SortingOrder === "asc") {
+      
+            SortingOrder = "desc"
+            return console.log("from asc")
+        }
+        if (SortingOrder === "desc") {
+            SortingOrder = "asc"
+            return console.log("from desc")
+        }
+    }
+
+    OnSortRating(KeyWord) {
+        this.Hotels.Sort = KeyWord
+     
+        if (SortingOrder === "asc") {
+           
+            SortingOrder = "desc"
+            return console.log("from asc")
+        }
+        if (SortingOrder === "desc") {
+            SortingOrder = "asc"
+            return console.log("from desc")
+        }
+    }
+
 
 
     render() {
 
-      
+
         indexOfLastHotel = this.state.activePage * this.state.itemsCountPerPage;
         indexOfFirstHotel = indexOfLastHotel - this.state.itemsCountPerPage;
 
-        currentHotels =   _.slice(this.Hotels.SearchFilter, indexOfFirstHotel, indexOfLastHotel);
-
+        currentHotels = _.slice(this.Hotels.SearchFilter, indexOfFirstHotel, indexOfLastHotel);
         return (
             <div>
-           
+
                 <div className="container">
                     <h2>Select Hotel</h2>
 
@@ -251,7 +304,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                         <div className="col-md-3">
                             <h3>Filter</h3>
                             <form className="col-sm-12 col-md-12" role="search">
-                                <div className="form-group input-group"> 
+                                <div className="form-group input-group">
                                     <input type="text" className="form-control" placeholder="Search hotel name..." ref="searchInput" />
                                     <span className="input-group-btn">
                                         <button className="btn btn-primary" type="button" onClick={() => { this.handleSearchClick(this.refs.searchInput.value) }} ref="searchBtn" id="searchID">
@@ -267,10 +320,10 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
 
                                 <div>
                                     <Rheostat
-                                    min={this.state.min}
-                                    max= {this.state.max}
-                                    onValuesUpdated={(sliderState) => this.updatePriceRanger(sliderState)}
-                
+                                        min={this.state.min}
+                                        max={this.state.max}
+                                        onValuesUpdated={(sliderState) => this.updatePriceRanger(sliderState)}
+
                                         values={this.state.values}
 
                                     />
@@ -285,25 +338,25 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                                 <h4>Star Rating <span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.star.id)}>^</button></span></h4>
                             </div>
                             <div id="StarRating" ref="star">
-                                              
-                                            {this.state.filterStar.map((v, key) => {
-                                               
 
-                                                return (
-                                                    <div key={key}>
-                                                        <label>
-                                                            <input type="checkbox" checked={v.selected} ref ="starR"
-                                                            onClick={() => this.handleStarCheck(v.code,key)} id="starRating" />
+                                {this.state.filterStar.map((v, key) => {
 
-                                                        </label>
-                                                        <label>
-                                                            <Rater total={5} rating={v.code} interactive={false} />
 
-                                                        </label>
-                                                        <a onClick={() => this.OnlyClick(v, this.state.filterStar,this.Hotels.ratingInput)}> only </a>
-                                                    </div>)
-                                            })}
-                                
+                                    return (
+                                        <div key={key}>
+                                            <label>
+                                                <input type="checkbox" checked={v.selected} ref="starR"
+                                                    onClick={() => this.handleStarCheck(v.code, key)} id="starRating" />
+
+                                            </label>
+                                            <label>
+                                                <Rater total={5} rating={v.code} interactive={false} />
+
+                                            </label>
+                                            <a onClick={() => this.OnlyClick(v, this.state.filterStar, this.Hotels.ratingInput)}> only </a>
+                                        </div>)
+                                })}
+
                             </div>
 
                             <hr />
@@ -312,22 +365,22 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                             </div>
                             <div className="filterStyles" id="District" ref="dist">
 
-                                            {this.state.filterDist.map((v, key) => {
-                                                return (
-                                                    <div key={key}>
-                                                        <label>
-                                                            <input type="checkbox" checked={v.selected} 
-                                                            onClick={() => this.handleDistCheck(v.code,key)}/>
+                                {this.state.filterDist.map((v, key) => {
+                                    return (
+                                        <div key={key}>
+                                            <label>
+                                                <input type="checkbox" checked={v.selected}
+                                                    onClick={() => this.handleDistCheck(v.code, key)} />
 
-                                                        </label>
-                                                        <label>
-                                                            <p>{v.label}</p>
+                                            </label>
+                                            <label>
+                                                <p>{v.label}</p>
 
-                                                        </label>
-                                                        <a onClick={() => this.OnlyClick(v, this.state.filterDist,this.Hotels.districtInput)}> only </a>
-                                                    </div>)
-                                            })}
-                                        
+                                            </label>
+                                            <a onClick={() => this.OnlyClick(v, this.state.filterDist, this.Hotels.districtInput)}> only </a>
+                                        </div>)
+                                })}
+
                             </div>
                             <hr />
                             <div>
@@ -335,21 +388,21 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                             </div>
                             <div className="filterStyles" id="Chain" ref="chain">
 
-            
-                                            {this.state.filterChain.map((v, key) => {
-                                                return (
-                                                    <div key={key}>
-                                                        <label>
-                                                        <input type="checkbox" checked={v.selected}
-                                                            onClick={() => this.handleChainCheck(v.code,key)} /> 
-                                                        </label>
-                                                        <label>
-                                                            <p>{v.label}</p>
-                                                        </label>
-                                                        <a onClick={() => this.OnlyClick(v, this.state.filterChain,this.Hotels.ChainInput)}> only </a>
-                                                    </div>)
-                                            })}
-                                        
+
+                                {this.state.filterChain.map((v, key) => {
+                                    return (
+                                        <div key={key}>
+                                            <label>
+                                                <input type="checkbox" checked={v.selected}
+                                                    onClick={() => this.handleChainCheck(v.code, key)} />
+                                            </label>
+                                            <label>
+                                                <p>{v.label}</p>
+                                            </label>
+                                            <a onClick={() => this.OnlyClick(v, this.state.filterChain, this.Hotels.ChainInput)}> only </a>
+                                        </div>)
+                                })}
+
                             </div>
                             <hr />
                             <div>
@@ -357,22 +410,22 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                             </div>
                             <div className="filterStyles" id="PropertyAmenities" ref="pa">
 
-                                
 
-                                            {this.state.filterPA.map((v, key) => {
-                                                return (
-                                                    <div key={key}>
-                                                        <label>
-                                                            <input type="checkbox" value="asdasd" checked={v.selected}
-                                                            onClick={() => this.handlePACheck(v.code,key)} />
-                                                        </label>
-                                                        <label>
-                                                            <p>{v.label}</p>
-                                                        </label>
-                                                        <a onClick={() => this.OnlyClick(v, this.state.filterPA,this.Hotels.PAInput)}> only </a>
-                                                    </div>)
-                                            })}
-                                       
+
+                                {this.state.filterPA.map((v, key) => {
+                                    return (
+                                        <div key={key}>
+                                            <label>
+                                                <input type="checkbox" value="asdasd" checked={v.selected}
+                                                    onClick={() => this.handlePACheck(v.code, key)} />
+                                            </label>
+                                            <label>
+                                                <p>{v.label}</p>
+                                            </label>
+                                            <a onClick={() => this.OnlyClick(v, this.state.filterPA, this.Hotels.PAInput)}> only </a>
+                                        </div>)
+                                })}
+
                             </div>
                             <hr />
                             <div>
@@ -380,32 +433,32 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                             </div>
                             <div className="filterStyles" id="RoomAmenities" ref="ra">
 
-                                
 
-                                            {this.state.filterRA.map((v, key) => {
-                                                return (
-                                                    <div key={key}>
-                                                        <label>
-                                                            <input type="checkbox" value="asdasd" checked={v.selected} 
-                                                            onClick={() => this.handleRACheck(v.code,key)}/>
-                                                        </label>
-                                                        <label>
-                                                            <p>{v.label}</p>
-                                                        </label>
-                                                        <a onClick={() => this.OnlyClick(v, this.state.filterRA,this.Hotels.RAInput)}> only </a>
-                                                    </div>)
-                                            })}
-                                        
+
+                                {this.state.filterRA.map((v, key) => {
+                                    return (
+                                        <div key={key}>
+                                            <label>
+                                                <input type="checkbox" value="asdasd" checked={v.selected}
+                                                    onClick={() => this.handleRACheck(v.code, key)} />
+                                            </label>
+                                            <label>
+                                                <p>{v.label}</p>
+                                            </label>
+                                            <a onClick={() => this.OnlyClick(v, this.state.filterRA, this.Hotels.RAInput)}> only </a>
+                                        </div>)
+                                })}
+
                             </div>
                         </div>
-                     
+
                         <div className="col-md-9">
-                        <ul className="nav nav-pills">
-                                <li className="active"><a>Popular</a></li>
-                                <li onClick={() => this.OnPriceSort()}><a >Price</a></li>
-                                <li><a >Distance</a></li>
-                                <li><a >Name</a></li>
-                                <li><a >Rating</a></li>
+                            <ul className="nav nav-pills">
+                                <li className="active"><a onClick={() => this.OnSort(this.refs.Popular.id)} id="Popular" ref="Popular">Popular</a></li>
+                                <li><a onClick={() => this.OnSortPrice(this.refs.Price.id)} id="Price" ref="Price" >Price</a></li>
+                                <li><a onClick={() => this.OnSortDistance(this.refs.Distance.id)} id="Distance" ref="Distance" >Distance</a></li>
+                                <li><a onClick={() => this.OnSortName(this.refs.Name.id)} id="Name" ref="Name" >Name</a></li>
+                                <li><a onClick={() => this.OnSortRating(this.refs.Rating.id)} id="Rating" ref="Rating" >Rating</a></li>
                                 <span className="properties"> {this.Hotels.SearchFilter.length} properties found </span>
                             </ul>
 
@@ -448,7 +501,7 @@ let currentHotels, indexOfLastHotel, indexOfFirstHotel;
                 <Pagination
                     activePage={this.state.activePage}
                     itemsCountPerPage={this.state.itemsCountPerPage}
-                    totalItemsCount={ this.Hotels.SearchFilter.length}
+                    totalItemsCount={this.Hotels.SearchFilter.length}
                     pageRangeDisplayed={5}
                     onChange={this.handlePageChange}
                 />
