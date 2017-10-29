@@ -5,8 +5,7 @@ import _ from 'lodash';
 
 
 class Hotels {
-
-    @observable filteredData = []
+@observable filteredData = []
     @observable searchInput = ''
     @observable ratingInput = [];
     @observable districtInput = [];
@@ -15,37 +14,27 @@ class Hotels {
     @observable PAInput = [];
     @observable PriceInput = [];
     @observable Sort = '';
-    //(a.summary.lowRate) - (b.summary.lowRate)
+@observable SortDir = '';
+    
     @computed get SearchFilter() {
-
-        // switch(expression) {
-        //     case n:
-        //         code block
-        //         break;
-        //     case n:
-        //         code block
-        //         break;
-        //     default:
-        //         code block
-        // }
 
         let SortedData = _.sortBy(this.filteredData, (a) => {
 
             switch (this.Sort) {
-                case "Price":
+                case "priceID":
                     {
                         return a.summary.lowRate
                     }
-                case "Distance":
+                case "distID":
                     {
                         return a.summary.distance
                     }
-                case "Name":
+                case "nameID":
                     {
                         return a.summary.hotelName
                         
                     }
-                case "Rating":
+                case "ratingID":
                     {
                         return a.rating.map( d => {
                            return d.value
@@ -54,9 +43,9 @@ class Hotels {
             }
 
         })
-        
 
-          _.reverse(SortedData)
+        if(this.SortDir === 'DESC') {
+            _.reverse(SortedData) }
 
         return _.filter(SortedData, (data) => {
 
