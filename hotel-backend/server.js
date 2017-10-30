@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 app.use('/hotel', require('./hotel'));
 
-app.listen(port,'192.168.0.104', function () {
+app.listen(port, function () {
     console.log('Running server on ' + port);
 });
 

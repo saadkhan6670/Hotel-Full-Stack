@@ -8,7 +8,14 @@ import _ from 'lodash';
 import Rheostat from 'rheostat';
 import { inject, observer } from 'mobx-react';
 import $ from 'jquery';
+import createHistory from 'history/createBrowserHistory'
 require("bootstrap/less/bootstrap.less");
+
+const history = createHistory()
+
+// Get the current location.
+const location = history.location
+
 
 let currentHotels, indexOfLastHotel, indexOfFirstHotel;
 
@@ -40,7 +47,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
     }
 
     componentDidMount() {
-        axios.get("http://122.8.164.218:5000/hotel/matched-hotels")
+        axios.get("http://localhost:5000/hotel/matched-hotels")
             .then((response) => {
 
                 this.setState({
@@ -54,7 +61,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                 console.log(error)
             })
 
-        axios.get("http://122.8.164.218:5000/hotel/hotel-filters")
+        axios.get("http://localhost:5000/hotel/hotel-filters")
             .then((response) => {
 
                 this.setState({
@@ -277,8 +284,6 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
             default:
                 console.log("No refs")
         }
-
-
     }
 
 
@@ -289,6 +294,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
         indexOfFirstHotel = indexOfLastHotel - this.state.itemsCountPerPage;
 
         currentHotels = _.slice(this.Hotels.SearchFilter, indexOfFirstHotel, indexOfLastHotel);
+  
         return (
             <div>
 
