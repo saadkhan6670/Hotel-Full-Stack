@@ -1,26 +1,43 @@
 import { observable, computed } from 'mobx';
-import queryString  from 'query-string';
-import createHistory from 'history/createBrowserHistory'
 import _ from 'lodash';
 
+import queryString  from 'query-string';
+import createHistory from 'history/createBrowserHistory'
 
+const history = createHistory()
 
+// Get the current location.
+const location = history.location
+const parsed = queryString.stringify(location);
 
 class Hotels {
-@observable filteredData = []
-    @observable searchInput = ''
-    @observable ratingInput = [];
-    @observable districtInput = [];
-    @observable ChainInput = [];
-    @observable RAInput = [];
-    @observable PAInput = [];
-    @observable PriceInput = [];
+    @observable hotel_data = []
+
     @observable Sort = '';
-@observable SortDir = '';
+    @observable SortDir = '';
+
+    @observable filters ={ 
+     searchInput : '',
+     ratingInput : [],
+     districtInput : [],
+     ChainInput : [],
+     RAInput : [],
+     PAInput : [],
+     PriceInput :[]
+    }
     
     @computed get SearchFilter() {
+   
+        const searchString = queryString.stringify(this.filters);
+    
+        history.push({
+            pathname: '/MatchedHotels',
+            search:  searchString,
+        
+        })
+        console.log(this.filters)
 
-        let SortedData = _.sortBy(this.filteredData, (a) => {
+        let SortedData = _.sortBy(this.hotel_data, (a) => {
 
             switch (this.Sort) {
                 case "priceID":
@@ -53,43 +70,38 @@ class Hotels {
 
 
             //Search input filter
-            return data.summary.hotelName.toLowerCase().indexOf(this.searchInput.toLowerCase()) !== -1 &&
+            return data.summary.hotelName.toLowerCase().indexOf(this.filters.searchInput.toLowerCase()) !== -1 &&
 
                 //Price Filter
-                data.summary.lowRate >= this.PriceInput[0] && data.summary.lowRate <= this.PriceInput[1] &&
+                data.summary.lowRate >= this.filters.PriceInput[0] && data.summary.lowRate <= this.filters.PriceInput[1] &&
 
 
                 //StarRating Filter
-                this.ratingInput.every((c) => {
+                this.filters.ratingInput.every((c) => {
                     return _.some((data.rating), d => {
                         return d.value !== c;
                     })
                 }) &&
 
-                _.some((data.rating), d => {
-                    return d.value !== this.ratingOnlyInput;
-                })
-                &&
-
                 //District Filter
-                this.districtInput.every((c) => {
+                this.filters.districtInput.every((c) => {
                     return data.meta.districtId !== c
                 }) &&
 
                 //Chain Filter
-                this.ChainInput.every((c) => {
+                this.filters.ChainInput.every((c) => {
                     return data.meta.chainId !== c
                 }) &&
 
                 //property Amenities Filter
-                this.PAInput.every((c) => {
+                this.filters.PAInput.every((c) => {
                     return _.some((data.meta.amenities.propertyAmenity), d => {
                         return d.code !== c;
                     })
                 }) &&
 
                 //Room Amenities Filter
-                this.RAInput.every((c) => {
+                this.filters.RAInput.every((c) => {
                     return _.some((data.meta.amenities.roomAmenity), d => {
                         return d.code !== c;
                     })

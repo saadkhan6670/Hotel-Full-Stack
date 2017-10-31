@@ -9,20 +9,7 @@ import Rheostat from 'rheostat';
 import { inject, observer } from 'mobx-react';
 import $ from 'jquery';
 
-import queryString  from 'query-string';
-import createHistory from 'history/createBrowserHistory'
-import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
-
 require("bootstrap/less/bootstrap.less");
-
-
-const history = createHistory()
-
-
-// Get the current location.
-const location = history.location
-const parsed = queryString.parse(location);
-
 
 
 let currentHotels, indexOfLastHotel, indexOfFirstHotel;
@@ -41,7 +28,6 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
             activePage: 1,
             itemsCountPerPage: 40,
             resources: [],
-            hotel_data: [],
             values: [],
             filterStar: [],
             filterDist: [],
@@ -58,13 +44,8 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
         axios.get("http://localhost:5000/hotel/matched-hotels")
             .then((response) => {
 
-                this.setState({
-                    hotel_data: response.data
-                })
-                this.Hotels.filteredData = _.clone(this.state.hotel_data)
-
-
-
+                    this.Hotels.hotel_data = response.data
+                
             }).catch((error) => {
                 console.log(error)
             })
@@ -84,7 +65,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                     max: response.data[2].value.max
                 })
 
-                this.Hotels.PriceInput = [this.state.min, this.state.max]
+                this.Hotels.filters.PriceInput = [this.state.min, this.state.max]
             }).catch((error) => {
                 console.log(error)
             })
@@ -96,31 +77,15 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
     }
 
     //Search Input handler
-    handleSearchClick(input) {
-
-          
-        
-        parsed.h = this.Hotels.searchInput
-        parsed.rating = this.Hotels.ratingInput;
-        parsed.h2 = 'saad'
-        
-
-        history.push({
-            pathname: '/MatchedHotels',
-            search:  JSON.stringify(parsed.h2),
-            
-            
-        })
+    handleSearchClick() {
+        this.Hotels.filters.searchInput = this.refs.searchInput.value
+    
+       
       
-        this.Hotels.searchInput = this.refs.searchInput.value
     }
 
       // starRating handel event
       handleStarCheck(code, key) { 
-         
-        history.push('/MatchedHotels')
-
-
 
         resetButtonStrFlg = true;
         var a = this.state.filterStar
@@ -132,25 +97,25 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
 
 
         if (a[key].selected) {
-            _.pull(this.Hotels.ratingInput, code)
+            _.pull(this.Hotels.filters.ratingInput, code)
         }
 
         else {
-            this.Hotels.ratingInput.push(code);
+            this.Hotels.filters.ratingInput.push(code);
         }
     }
 
     //Price ranger handler
     updatePriceRanger(sliderState) {
 
-        _.remove(this.Hotels.PriceInput)
+        _.remove(this.Hotels.filters.PriceInput)
 
         this.setState({
             values: sliderState.values,
         });
 
         _.forEach(sliderState.values, (d) => {
-            this.Hotels.PriceInput.push(d)
+            this.Hotels.filters.PriceInput.push(d)
         })
     }
 
@@ -165,11 +130,11 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
         })
 
         if (a[key].selected) {
-            _.pull(this.Hotels.districtInput, code);
+            _.pull(this.Hotels.filters.districtInput, code);
         }
 
         else {
-            this.Hotels.districtInput.push(code);
+            this.Hotels.filters.districtInput.push(code);
         }
 
     }
@@ -185,11 +150,11 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
         })
 
         if (a[key].selected) {
-            _.pull(this.Hotels.ChainInput, code);
+            _.pull(this.Hotels.filters.ChainInput, code);
         }
 
         else {
-            this.Hotels.ChainInput.push(code);
+            this.Hotels.filters.ChainInput.push(code);
         }
 
     }
@@ -205,11 +170,11 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
         })
 
         if (a[key].selected) {
-            _.pull(this.Hotels.PAInput, code);
+            _.pull(this.Hotels.filters.PAInput, code);
         }
 
         else {
-            this.Hotels.PAInput.push(code);
+            this.Hotels.filters.PAInput.push(code);
         }
 
     }
@@ -225,16 +190,14 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
         })
 
         if (a[key].selected) {
-            _.pull(this.Hotels.RAInput, code);
+            _.pull(this.Hotels.filters.RAInput, code);
         }
 
         else {
-            this.Hotels.RAInput.push(code);
+            this.Hotels.filters.RAInput.push(code);
         }
 
     }
-
-  
 
      //Hide Click Handler
     handleDivHide(e) {
@@ -317,7 +280,6 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
 
 
     render() {
-        console.log(this.props)
 
         indexOfLastHotel = this.state.activePage * this.state.itemsCountPerPage;
         indexOfFirstHotel = indexOfLastHotel - this.state.itemsCountPerPage;
@@ -362,12 +324,10 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                                     <span>{this.state.values[0]}</span> <span>{this.state.values[1]}</span>
                                 </div>
 
-
-
                             </div>
                             <div>
                                 <h4>Star Rating  <span>{resetButtonStr = resetButtonStrFlg ? <button ref="starR" name="starRating" className="btn btn-primary" style={{ height: "20px", width: "40px", padding: "0px 0px" }}
-                                    onClick={() => this.handleReset(this.state.filterStar, this.Hotels.ratingInput, this.refs.starR.name)}>reset</button> : null}</span><span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.star.id)}>^</button></span></h4>
+                                    onClick={() => this.handleReset(this.state.filterStar, this.Hotels.filters.ratingInput, this.refs.starR.name)}>reset</button> : null}</span><span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.star.id)}>^</button></span></h4>
                             </div>
                             <div id="StarRating" ref="star">
 
@@ -385,7 +345,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                                                 <Rater total={5} rating={v.code} interactive={false} />
 
                                             </label>
-                                            <a onClick={() => this.OnlyClick(v, this.state.filterStar, this.Hotels.ratingInput, resetButtonStrFlg)}> only </a>
+                                            <a onClick={() => this.OnlyClick(v, this.state.filterStar, this.Hotels.filters.ratingInput, resetButtonStrFlg)}> only </a>
                                         </div>)
                                 })}
 
@@ -396,7 +356,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
 
                             <div>
                                 <h4>District <span>{resetButtonDist = resetButtonDistFlg ? <button ref="distRes" name="dist" className="btn btn-primary" style={{ height: "20px", width: "40px", padding: "0px 0px" }}
-                                    onClick={() => this.handleReset(this.state.filterDist, this.Hotels.districtInput, this.refs.distRes.name)}>reset</button> : null}</span><span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.dist.id)}>^</button></span></h4>
+                                    onClick={() => this.handleReset(this.state.filterDist, this.Hotels.filters.districtInput, this.refs.distRes.name)}>reset</button> : null}</span><span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.dist.id)}>^</button></span></h4>
                             </div>
                             <div className="filterStyles" id="District" ref="dist">
 
@@ -412,7 +372,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                                                 <p>{v.label}</p>
 
                                             </label>
-                                            <a onClick={() => this.OnlyClick(v, this.state.filterDist, this.Hotels.districtInput, resetButtonDistFlg)}> only </a>
+                                            <a onClick={() => this.OnlyClick(v, this.state.filterDist, this.Hotels.filters.districtInput, resetButtonDistFlg)}> only </a>
                                         </div>)
                                 })}
 
@@ -420,7 +380,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                             <hr />
                             <div>
                                 <h4>Chain  <span>{resetButtonChain = resetButtonChainFlg ? <button className="btn btn-primary" ref="chainRes" name="chain" style={{ height: "20px", width: "40px", padding: "0px 0px" }}
-                                    onClick={() => this.handleReset(this.state.filterChain, this.Hotels.chainInput, this.refs.chainRes.name)}>reset</button> : null}</span><span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.chain.id)}>^</button></span></h4>
+                                    onClick={() => this.handleReset(this.state.filterChain, this.Hotels.filters.chainInput, this.refs.chainRes.name)}>reset</button> : null}</span><span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.chain.id)}>^</button></span></h4>
                             </div>
                             <div className="filterStyles" id="Chain" ref="chain">
 
@@ -435,7 +395,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                                             <label>
                                                 <p>{v.label}</p>
                                             </label>
-                                            <a onClick={() => this.OnlyClick(v, this.state.filterChain, this.Hotels.ChainInput , resetButtonChainFlg)}> only </a>
+                                            <a onClick={() => this.OnlyClick(v, this.state.filterChain, this.Hotels.filters.ChainInput , resetButtonChainFlg)}> only </a>
                                         </div>)
                                 })}
 
@@ -443,7 +403,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                             <hr />
                             <div>
                                 <h4>Property Amenities <span>{resetButtonPA = resetButtonPAFlg ? <button ref="PARes" name="PA" className="btn btn-primary" style={{ height: "20px", width: "40px", padding: "0px 0px" }}
-                                    onClick={() => this.handleReset(this.state.filterPA, this.Hotels.PAInput, this.refs.PARes.name)}>reset</button> : null}</span> <span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.pa.id)}>^</button></span></h4>
+                                    onClick={() => this.handleReset(this.state.filterPA, this.Hotels.filters.PAInput, this.refs.PARes.name)}>reset</button> : null}</span> <span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.pa.id)}>^</button></span></h4>
                             </div>
                             <div className="filterStyles" id="PropertyAmenities" ref="pa">
 
@@ -459,7 +419,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                                             <label>
                                                 <p>{v.label}</p>
                                             </label>
-                                            <a onClick={() => this.OnlyClick(v, this.state.filterPA, this.Hotels.PAInput, resetButtonPAFlg)}> only </a>
+                                            <a onClick={() => this.OnlyClick(v, this.state.filterPA, this.Hotels.filters.PAInput, resetButtonPAFlg)}> only </a>
                                         </div>)
                                 })}
 
@@ -467,7 +427,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                             <hr />
                             <div>
                                 <h4>Room Amenities  <span>{resetButtonRA = resetButtonRAFlg ? <button ref="RARes" name="RA" className="btn btn-primary" style={{ height: "20px", width: "40px", padding: "0px 0px" }}
-                                    onClick={() => this.handleReset(this.state.filterRA, this.Hotels.RAInput, this.refs.RARes.name)}>reset</button> : null}</span><span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.ra.id)}>^</button></span></h4>
+                                    onClick={() => this.handleReset(this.state.filterRA, this.Hotels.filters.RAInput, this.refs.RARes.name)}>reset</button> : null}</span><span><button className="btn btn-default" onClick={() => this.handleDivHide(this.refs.ra.id)}>^</button></span></h4>
                             </div>
                             <div className="filterStyles" id="RoomAmenities" ref="ra">
 
@@ -483,7 +443,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                                             <label>
                                                 <p>{v.label}</p>
                                             </label>
-                                            <a onClick={() => this.OnlyClick(v, this.state.filterRA, this.Hotels.RAInput, resetButtonRAFlg)}> only </a>
+                                            <a onClick={() => this.OnlyClick(v, this.state.filterRA, this.Hotels.filters.RAInput, resetButtonRAFlg)}> only </a>
                                         </div>)
                                 })}
 

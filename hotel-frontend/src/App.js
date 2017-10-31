@@ -14,7 +14,7 @@ const App = () => (
          component={SearchComponent}
          />
     <Route  
-         path="/MatchedHotels/:ahsan" 
+         path="/MatchedHotels" 
          component={MatchedHotels}
          
          />
