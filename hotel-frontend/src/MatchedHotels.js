@@ -8,13 +8,21 @@ import _ from 'lodash';
 import Rheostat from 'rheostat';
 import { inject, observer } from 'mobx-react';
 import $ from 'jquery';
+
+import queryString  from 'query-string';
 import createHistory from 'history/createBrowserHistory'
+import { BrowserRouter as Router, Route, Link} from 'react-router-dom'
+
 require("bootstrap/less/bootstrap.less");
+
 
 const history = createHistory()
 
+
 // Get the current location.
 const location = history.location
+const parsed = queryString.parse(location);
+
 
 
 let currentHotels, indexOfLastHotel, indexOfFirstHotel;
@@ -90,7 +98,46 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
     //Search Input handler
     handleSearchClick(input) {
 
+          
+        
+        parsed.h = this.Hotels.searchInput
+        parsed.rating = this.Hotels.ratingInput;
+        parsed.h2 = 'saad'
+        
+
+        history.push({
+            pathname: '/MatchedHotels',
+            search:  JSON.stringify(parsed.h2),
+            
+            
+        })
+      
         this.Hotels.searchInput = this.refs.searchInput.value
+    }
+
+      // starRating handel event
+      handleStarCheck(code, key) { 
+         
+        history.push('/MatchedHotels')
+
+
+
+        resetButtonStrFlg = true;
+        var a = this.state.filterStar
+        a[key].selected = !a[key].selected
+
+        this.setState({
+            filterStar: a
+        })
+
+
+        if (a[key].selected) {
+            _.pull(this.Hotels.ratingInput, code)
+        }
+
+        else {
+            this.Hotels.ratingInput.push(code);
+        }
     }
 
     //Price ranger handler
@@ -187,25 +234,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
 
     }
 
-    // starRating handel event
-    handleStarCheck(code, key) { 
-        resetButtonStrFlg = true;
-        var a = this.state.filterStar
-        a[key].selected = !a[key].selected
-
-        this.setState({
-            filterStar: a
-        })
-
-
-        if (a[key].selected) {
-            _.pull(this.Hotels.ratingInput, code)
-        }
-
-        else {
-            this.Hotels.ratingInput.push(code);
-        }
-    }
+  
 
      //Hide Click Handler
     handleDivHide(e) {
@@ -288,7 +317,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
 
 
     render() {
-
+        console.log(this.props)
 
         indexOfLastHotel = this.state.activePage * this.state.itemsCountPerPage;
         indexOfFirstHotel = indexOfLastHotel - this.state.itemsCountPerPage;

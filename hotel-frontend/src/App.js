@@ -11,10 +11,13 @@ const App = () => (
     <Route 
          exact 
          path="/" 
-         component={SearchComponent}/>
+         component={SearchComponent}
+         />
     <Route  
-         path="/MatchedHotels" 
-         component={MatchedHotels}/>
+         path="/MatchedHotels/:ahsan" 
+         component={MatchedHotels}
+         
+         />
   </div>
 </Router>
 );
