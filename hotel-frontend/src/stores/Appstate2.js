@@ -1,14 +1,6 @@
 import { observable, computed } from 'mobx';
 import _ from 'lodash';
 
-import queryString  from 'query-string';
-import createHistory from 'history/createBrowserHistory'
-
-const history = createHistory()
-
-// Get the current location.
-const location = history.location
-const parsed = queryString.stringify(location);
 
 class Hotels {
     @observable hotel_data = []
@@ -27,16 +19,8 @@ class Hotels {
     }
     
     @computed get SearchFilter() {
-   
-        const searchString = queryString.stringify(this.filters);
-    
-        history.push({
-            pathname: '/MatchedHotels',
-            search:  searchString,
+      
         
-        })
-        console.log(this.filters)
-
         let SortedData = _.sortBy(this.hotel_data, (a) => {
 
             switch (this.Sort) {

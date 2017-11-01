@@ -8,6 +8,11 @@ import _ from 'lodash';
 import Rheostat from 'rheostat';
 import { inject, observer } from 'mobx-react';
 import $ from 'jquery';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+
+import queryString from 'query-string';
+
+
 
 require("bootstrap/less/bootstrap.less");
 
@@ -37,7 +42,6 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
             min: 0,
             max: 0,
         };
-
     }
 
     componentDidMount() {
@@ -79,9 +83,7 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
     //Search Input handler
     handleSearchClick() {
         this.Hotels.filters.searchInput = this.refs.searchInput.value
-    
-       
-      
+
     }
 
       // starRating handel event
@@ -285,6 +287,9 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
         indexOfFirstHotel = indexOfLastHotel - this.state.itemsCountPerPage;
 
         currentHotels = _.slice(this.Hotels.SearchFilter, indexOfFirstHotel, indexOfLastHotel);
+
+        // const parsed = queryString.parse(this.props.location.search);
+        console.log(this.props)
   
         return (
             <div>
@@ -300,9 +305,11 @@ let resetButtonStrFlg = false, resetButtonDistFlg = false, resetButtonChainFlg =
                                 <div className="form-group input-group">
                                     <input type="text" className="form-control" placeholder="Search hotel name..." ref="searchInput" />
                                     <span className="input-group-btn">
+                                    
                                         <button className="btn btn-primary" type="button" onClick={() => { this.handleSearchClick(this.refs.searchInput.value) }} ref="searchBtn" id="searchID">
                                             <span className="glyphicon glyphicon-search"></span>
                                         </button>
+                               
                                     </span>
                                 </div>
                             </form>
